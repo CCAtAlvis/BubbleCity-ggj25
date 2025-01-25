@@ -46,7 +46,7 @@ public class HomeController : MonoBehaviour
                     humanController.AssignMe(this);
                 // Sending ahead for birth registration
                 GameManager.GetInstance().RegisterBirthForHuman(humanController);
-            }          
-        }       
+            }
+        }
     }
 }
