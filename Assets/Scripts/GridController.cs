@@ -1,8 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class SpriteController : MonoBehaviour
+public class GridController : MonoBehaviour
 {
+
+    private static GridController instance;
+    public static GridController GetInstance() => instance;
+
     public int initialGridDiameter = 3;
     public int bufferGridDiameter = 1;
     public float diameterVolumeMultiplier = 0.65f;
@@ -14,6 +18,12 @@ public class SpriteController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        if (instance == null) {
+            instance = this;
+        } else {
+            Destroy(gameObject);
+        }
+
         setGridSize(initialGridDiameter);
     }
 
@@ -37,7 +47,6 @@ public class SpriteController : MonoBehaviour
         maxGridDiameter = diameter;
 
         var totalSize = diameter / 2 + 1 + bufferGridDiameter/2;
-        Debug.Log("Total size: " + totalSize + " Diameter: " + diameter + " Buffer: " + bufferGridDiameter);
         for (int i = -totalSize; i <= totalSize; i++)
         {
             for (int j = -totalSize; j <= totalSize; j++)
