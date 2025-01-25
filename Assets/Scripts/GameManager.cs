@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -32,6 +33,12 @@ public class GameManager : MonoBehaviour
     public float woodFromTreeLevel1 = 1;
     public float woodFromTreeLevel2 = 5;
     public float woodFromTreeLevel3 = 20;
+
+    public Boolean isHoveredGridEmpty = false;
+
+    public Boolean isHoverActive =  false;
+
+    public TileController hoveredGrid;
 
     // [Header("UI")]
     // public TextMeshProUGUI oxygenText;
