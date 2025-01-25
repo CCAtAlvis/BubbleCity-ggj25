@@ -63,13 +63,15 @@ public class GameManager : MonoBehaviour
         if (instance == null)
             instance = this;
         else
-            Destroy(instance);
+            Destroy(this);
+
+        totalOxygen = initialOxygen;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        totalOxygen = initialOxygen;
+        // totalOxygen = initialOxygen;
     }
 
     // Update is called once per frame
@@ -80,7 +82,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Game Over");
             return;
         }
-        totalOxygen += 1000*Time.deltaTime; 
+        // totalOxygen += 1000*Time.deltaTime; 
 
         var deltaTime = Time.deltaTime;
 
@@ -183,7 +185,7 @@ public class GameManager : MonoBehaviour
     // #endregion
 
     public void CheckHumans() {
-        Debug.Log("Humans now: " + people.Count());
+        // Debug.Log("Humans now: " + people.Count());
         foreach (var human in people.Where(p => p.state == HumanState.HOMELESS || p.state == HumanState.TREE_DONE)) {
             Debug.Log("Find House Near to Human: " + human.state.ToString());
             FindHouseNearestToHuman(human);

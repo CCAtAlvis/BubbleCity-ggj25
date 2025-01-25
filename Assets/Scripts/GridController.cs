@@ -10,20 +10,26 @@ public class GridController : MonoBehaviour
     public int initialGridDiameter = 3;
     public int bufferGridDiameter = 1;
     public float diameterVolumeMultiplier = 0.65f;
-    public SpriteRenderer spriteRenderer;
+    public GameObject tilePrefab;
 
     private int maxGridDiameter = 0;
-    private Dictionary<Vector2Int, TileController> coordinateToTile = new Dictionary<Vector2Int, TileController>();
+    private Dictionary<Vector2, TileController> coordinateToTile = new Dictionary<Vector2, TileController>();
+
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (instance == null) {
-            instance = this;
-        } else {
-            Destroy(gameObject);
-        }
-
         setGridSize(initialGridDiameter);
     }
 
@@ -46,35 +52,43 @@ public class GridController : MonoBehaviour
     {
         maxGridDiameter = diameter;
 
-        var totalSize = diameter / 2 + 1 + bufferGridDiameter/2;
+        var totalSize = (diameter - 1) / 2 + bufferGridDiameter;
         for (int i = -totalSize; i <= totalSize; i++)
         {
             for (int j = -totalSize; j <= totalSize; j++)
             {
-                Vector2Int coord = new Vector2Int(i, j);
-
-                // Skip if we already have a tile at this coordinate
-                if (coordinateToTile.ContainsKey(coord))
-                {
-                    // Update tile active state based on whether it's within bounds
-                    bool isWithinBounds = IsWithinGridBounds(i, j, diameter / 2);
-                    coordinateToTile[coord].SetWithinDiameter(isWithinBounds);
-                    continue;
-                }
-
                 var xOffset = 0f;
                 if (Mathf.Abs(j) % 2 == 1)
                 {
                     xOffset = 0.9f;
                 }
 
-                var sprite = Instantiate(spriteRenderer);
-                sprite.transform.position = new Vector3(xOffset + i * 1.8f, j * 0.45f, 0);
-                sprite.sortingOrder = j * -1;
+                float jFloat = j;
+                float iFloat = i;
+                if (xOffset > 0)
+                {
+                    jFloat = j - 1 + 0.5f;
+                    iFloat = i - 1 + 0.5f;
+                }
+                Vector2 coord = new Vector2(iFloat, jFloat);
+
+
+                // Skip if we already have a tile at this coordinate
+                if (coordinateToTile.ContainsKey(coord))
+                {
+                    // Update tile active state based on whether it's within bounds
+                    bool isWithinBounds = IsWithinGridBounds(iFloat, jFloat, (diameter - 1) / 2);
+                    coordinateToTile[coord].SetWithinDiameter(isWithinBounds);
+                    continue;
+                }
+
+                var tile = Instantiate(tilePrefab);
+                tile.transform.position = new Vector3(xOffset + i * 1.8f, j * 0.45f, j * -1);
+                // tile.sortingOrder = j * -1;
 
                 // Add TileController component and configure it
-                var tileController = sprite.gameObject.AddComponent<TileController>();
-                bool isWithinMainGrid = IsWithinGridBounds(i, j, diameter / 2);
+                var tileController = tile.gameObject.GetComponentInChildren<TileController>();
+                bool isWithinMainGrid = IsWithinGridBounds(iFloat, jFloat, (diameter - 1) / 2);
                 tileController.SetWithinDiameter(isWithinMainGrid);
 
                 // Store in our coordinate mapping
@@ -83,7 +97,7 @@ public class GridController : MonoBehaviour
         }
     }
 
-    private bool IsWithinGridBounds(int x, int y, int radius)
+    private bool IsWithinGridBounds(float x, float y, int radius)
     {
         return Mathf.Abs(x) <= radius && Mathf.Abs(y) <= radius;
     }
