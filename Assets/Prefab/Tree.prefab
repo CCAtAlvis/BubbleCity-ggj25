@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 4171026242833085949}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.8534951, y: 0.9551409, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -77,12 +77,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
+  m_Sprite: {fileID: -6589862888067575706, guid: c00d7205a333affa48a6f9e9c5a67061, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.16, y: 2.56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -106,3 +106,4 @@ MonoBehaviour:
   TreeSpriteLevel0: {fileID: 3112372192525146747, guid: 1dbdd50993517e7f8bca69db0030b478, type: 3}
   TreeSpriteLevel1: {fileID: 2083804067306892795, guid: f1ca38fb33e3f12a5b845259285f518a, type: 3}
   TreeSpriteLevel2: {fileID: 4805928820213045675, guid: 98c2970cf0d3f6cd4a57ba035ccbf3c5, type: 3}
+  isPlaced: 0
