@@ -36,9 +36,9 @@ public class GameManager : MonoBehaviour
     // public TextMeshProUGUI homelessHumansText;
 
     private float totalOxygen;
-    private List<TreeController> trees = new List<TreeController>();
-    private List<HomeController> homes = new List<HomeController>();
-    private List<HumanController> people = new List<HumanController>();
+    private List<TreeController> trees = new();
+    private List<HomeController> homes = new();
+    private List<HumanController> people = new();
 
     private int totalHumans;
     private int homedHumans;
