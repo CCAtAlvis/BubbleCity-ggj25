@@ -7,9 +7,9 @@ public class SpriteController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        for (int i = -10; i < 10; i++)
+        for (int i = -20; i < 20; i++)
         {
-            for (int j = -10; j < 10; j++)
+            for (int j = -20; j < 20; j++)
             {
                 var xOffset = 0f;
                 if (Mathf.Abs(j)%2==1) {
