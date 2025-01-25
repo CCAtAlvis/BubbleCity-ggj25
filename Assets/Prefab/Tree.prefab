@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: -6589862888067575706, guid: c00d7205a333affa48a6f9e9c5a67061, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -102,7 +102,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TREE_FIRST_THRESHOLD_DURATION: 5
   TREE_SECOND_THRESHOLD_DURATION: 10
-  level: 0
   TreeSpriteLevel0: {fileID: 3112372192525146747, guid: 1dbdd50993517e7f8bca69db0030b478, type: 3}
   TreeSpriteLevel1: {fileID: 2083804067306892795, guid: f1ca38fb33e3f12a5b845259285f518a, type: 3}
   TreeSpriteLevel2: {fileID: 4805928820213045675, guid: 98c2970cf0d3f6cd4a57ba035ccbf3c5, type: 3}

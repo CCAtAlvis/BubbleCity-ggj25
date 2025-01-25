@@ -12,6 +12,7 @@ public class DragStructure : MonoBehaviour  , IBeginDragHandler, IDragHandler, I
     {
         GameManager.GetInstance().isHoverActive = true;
         newInstance = Instantiate(gameObject,Input.mousePosition,Quaternion.identity);
+        print(newInstance);
         cam = Camera.main;
     }
 
@@ -26,7 +27,12 @@ public class DragStructure : MonoBehaviour  , IBeginDragHandler, IDragHandler, I
     {
         GameManager.GetInstance().isHoverActive = false;
         if(GameManager.GetInstance().isHoveredGridEmpty){
-            newInstance.GetComponent<TreeController>().isPlaced = true;
+            if(!newInstance.GetComponent<TreeController>().IsUnityNull()){
+                newInstance.GetComponent<TreeController>().isPlaced = true;
+            }
+            if(!newInstance.GetComponent<HomeController>().IsUnityNull()){
+                newInstance.GetComponent<HomeController>().isPlaced = true;
+            }
             GameManager.GetInstance().hoveredGrid.structureType = newInstance;
         }else{
             Destroy(newInstance);

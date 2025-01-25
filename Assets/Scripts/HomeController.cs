@@ -22,7 +22,8 @@ public class HomeController : MonoBehaviour
     private int pairs = 0;
     private bool isSingleHumanLeftOutInPairing = false;
     private float humanCreationProbabilityThreshold = 0.9f;
-
+    
+    public bool isPlaced = false;
     private void UpdateSprite()
     {
         spriteRenderer.sprite = HouseSprites[level];
@@ -66,14 +67,16 @@ public class HomeController : MonoBehaviour
         HouseSprites = new() { HouseSpriteLevel0, HouseSpriteLevel1, HouseSpriteLevel2 };
         spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
         UpdateSprite();
-        AddNewHuman();
-        AddNewHuman();
+        // AddNewHuman();
+        // AddNewHuman();
     }
 
     // Update is called once per frame
     void Update()
     {
-        RandomProbabilisticStrategy(occupants.Count());
+        if(isPlaced){
+            RandomProbabilisticStrategy(occupants.Count());
+        }
         //OnePairEachStrategy();
     }
 

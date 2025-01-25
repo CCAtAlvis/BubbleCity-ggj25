@@ -45,6 +45,7 @@ public class TreeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        print(level);
         if (isPlaced && (level == TreeLevel.SAPLING || level == TreeLevel.TEEN || level == TreeLevel.ADULT))
         {
             var currentTime = Time.time;

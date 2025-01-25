@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 1543543495117517831, guid: d9863ccf82c70699294e243eb70e4b7d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -106,3 +106,4 @@ MonoBehaviour:
   HouseSpriteLevel1: {fileID: -4979219026945489985, guid: 09df4d03e964fcaa1a74b5e5963cc9e2, type: 3}
   HouseSpriteLevel2: {fileID: -4443204530625228452, guid: 7538339b959d819649ff8fde98ee7b52, type: 3}
   occupants: []
+  isPlaced: 0
