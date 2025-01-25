@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
     // public TextMeshProUGUI homelessHumansText;
 
     private float totalOxygen;
+    public float GetCurrentOxygen() => totalOxygen;
     private List<TreeController> trees = new();
     private List<HomeController> homes = new();
     private List<HumanController> people = new();
@@ -72,6 +73,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Game Over");
             return;
         }
+        totalOxygen += 1000*Time.deltaTime; 
 
         // #region DEBUG POPULATION INCREASE
         if (Input.GetMouseButtonDown(0))

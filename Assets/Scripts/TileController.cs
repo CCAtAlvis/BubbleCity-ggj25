@@ -3,6 +3,10 @@ using UnityEngine;
 
 public class TileController : MonoBehaviour
 {
+    private bool isWithinDiameter;
+    public bool IsWithinDiameter => isWithinDiameter;
+    public void SetWithinDiameter(bool active) => isWithinDiameter = active;
+
     private GameObject structureType;
     public GameObject highlighter;
 
