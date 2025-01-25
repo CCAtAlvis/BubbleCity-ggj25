@@ -14,7 +14,8 @@ public class GameManager : MonoBehaviour
     public float homelessOxygenConsumptionRate = 100;
 
     [Header("Home Controls")]
-    public int homeCapacityLevel1 = 1;
+    public GameObject homeFab;
+    public int homeCapacityLevel1 = 10;
     public int homeCapacityLevel2 = 5;
     public int homeCapacityLevel3 = 20;
     public float woodForHomeLevel1 = 1;
@@ -29,10 +30,10 @@ public class GameManager : MonoBehaviour
     public float woodFromTreeLevel2 = 5;
     public float woodFromTreeLevel3 = 20;
 
-    [Header("UI")]
-    public TextMeshProUGUI oxygenText;
-    public TextMeshProUGUI homedHumansText;
-    public TextMeshProUGUI homelessHumansText;
+    // [Header("UI")]
+    // public TextMeshProUGUI oxygenText;
+    // public TextMeshProUGUI homedHumansText;
+    // public TextMeshProUGUI homelessHumansText;
 
     private float totalOxygen;
     private List<TreeController> trees = new List<TreeController>();
@@ -67,6 +68,20 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Game Over");
             return;
+        }
+
+        // DEBUG POPULATION INCREASE
+        if (Input.GetMouseButtonDown(0))
+        {            
+            Vector2 mousePos = Input.mousePosition;
+            // set the mousePos variable to the position of the mouse click (screen space)
+
+            Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, 10));
+            // set my spawn point variable by converting mousePos from screen space into world space
+            
+            GameObject g = Instantiate(homeFab);
+            g.transform.position = point;
+            homes.Add(g.GetComponent<HomeController>());
         }
 
         var deltaTime = Time.deltaTime;
@@ -129,9 +144,9 @@ public class GameManager : MonoBehaviour
         timeSinceLastUpdate += Time.deltaTime;
         levelTime += Time.deltaTime;
 
-        oxygenText.text = "Oxygen: " + totalOxygen.ToString();
-        homedHumansText.text = "Homed Humans: " + homedHumans.ToString();
-        homelessHumansText.text = "Homeless Humans: " + homelessHumans.ToString();
+        // oxygenText.text = "Oxygen: " + totalOxygen.ToString();
+        // homedHumansText.text = "Homed Humans: " + homedHumans.ToString();
+        // homelessHumansText.text = "Homeless Humans: " + homelessHumans.ToString();
     }
 
     public void RegisterBirthForHuman(HumanController newHuman)
