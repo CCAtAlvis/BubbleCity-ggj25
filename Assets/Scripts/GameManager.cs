@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    private static GameManager instance;
+    public static GameManager GetInstance() => instance;
     public float initialOxygen = 100;
 
     [Header("Human Controls")]
@@ -44,6 +46,13 @@ public class GameManager : MonoBehaviour
     private float timeSinceLastUpdate;
     private float levelTime;
 
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(instance);
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -117,28 +126,17 @@ public class GameManager : MonoBehaviour
             homelessHumans += totalPlace;
         }
 
-        if (timeSinceLastUpdate > 1)
-        {
-            timeSinceLastUpdate = 0;
-            var newHumans = (int)Mathf.Pow(1.1f, levelTime);
-            for (int i = 0; i < newHumans; i++)
-            {
-                var human = Instantiate(humanPrefab);
-                var humanController = human.GetComponent<HumanController>();
-                humanController.isHomeless = true;
-                people.Add(humanController);
-            }
-
-            homelessHumans += newHumans;
-            totalHumans += newHumans;
-        }
-
-
         timeSinceLastUpdate += Time.deltaTime;
         levelTime += Time.deltaTime;
 
         oxygenText.text = "Oxygen: " + totalOxygen.ToString();
         homedHumansText.text = "Homed Humans: " + homedHumans.ToString();
         homelessHumansText.text = "Homeless Humans: " + homelessHumans.ToString();
+    }
+
+    public void RegisterBirthForHuman(HumanController newHuman)
+    {
+        newHuman.birthTime = Time.time;
+        people.Add(newHuman);
     }
 }
