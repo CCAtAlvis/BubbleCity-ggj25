@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+
     private static GameManager instance;
     public static GameManager GetInstance() => instance;
     public float initialOxygen = 100;
@@ -109,13 +111,13 @@ public class GameManager : MonoBehaviour
         {
             switch (tree.level)
             {
-                case 1:
+                case TreeLevel.SAPLING:
                     totalOxygenProduced += oxygenFromTreeLevel1;
                     break;
-                case 2:
+                case TreeLevel.TEEN:
                     totalOxygenProduced += oxygenFromTreeLevel2;
                     break;
-                case 3:
+                case TreeLevel.ADULT:
                     totalOxygenProduced += oxygenFromTreeLevel3;
                     break;
             }
@@ -162,6 +164,8 @@ public class GameManager : MonoBehaviour
         timeSinceLastUpdate += Time.deltaTime;
         levelTime += Time.deltaTime;
 
+        CheckTrees();
+        CheckHumans();
         // oxygenText.text = "Oxygen: " + totalOxygen.ToString();
         // homedHumansText.text = "Homed Humans: " + homedHumans.ToString();
         // homelessHumansText.text = "Homeless Humans: " + homelessHumans.ToString();
@@ -173,7 +177,60 @@ public class GameManager : MonoBehaviour
         people.Add(newHuman);
     }
 
-    //#region Queue Management for Trees
-    
-    //#endregion
+    // #region Tree Queue Mechanism
+    public void CheckTrees()
+    {
+        foreach (var tree in trees.Where(t => t.level == TreeLevel.AWAITING_PLANTATION))
+        {
+            FindHumanNearestToTree(tree);
+        }
+    }
+
+    public bool FindHumanNearestToTree(TreeController tree)
+    {
+        var availableHouses = homes.Where(h => h.occupants.Count > 0);
+        if (availableHouses.Count() == 0) return false;
+        var treeVector = new Vector2(tree.transform.position.x, tree.transform.position.y);
+
+        var availableHousesSortedByDistance = availableHouses.OrderBy(house => {
+            var houseVector = new Vector2(house.transform.position.x, house.transform.position.y);
+            var distance = (houseVector - treeVector).magnitude;
+            return distance;
+        });
+
+        var theChosenHouse = availableHousesSortedByDistance.First();
+        theChosenHouse.SendHumanToWork(tree, HumanState.MOVING_FOR_PLANTING);
+        return true;
+    }
+    // #endregion
+
+    public void CheckHumans() {
+        Debug.Log("Humans now: " + people.Count());
+        foreach (var human in people.Where(p => p.state == HumanState.HOMELESS || p.state == HumanState.TREE_DONE)) {
+            Debug.Log("Find House Near to Human: " + human.state.ToString());
+            FindHouseNearestToHuman(human);
+        }
+    }
+
+    public bool FindHouseNearestToHuman(HumanController human) {
+                var availableHouses = homes.Where(h => h.occupants.Count > 0);
+        if (availableHouses.Count() == 0) return false;
+        var treeVector = new Vector2(human.transform.position.x, human.transform.position.y);
+
+        var availableHousesSortedByDistance = availableHouses.OrderBy(house => {
+            var houseVector = new Vector2(house.transform.position.x, house.transform.position.y);
+            var distance = (houseVector - treeVector).magnitude;
+            return distance;
+        });
+
+        var theChosenHouse = availableHousesSortedByDistance.First();
+        theChosenHouse.AddHuman(human);
+        return true;
+    }
+
+}
+
+public enum HumanWorkType {
+    PLANTATION = 0,
+    BUILDING_UPGRADE = 1
 }

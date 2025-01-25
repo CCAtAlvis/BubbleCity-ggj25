@@ -14,7 +14,7 @@ public class HomeController : MonoBehaviour
 
     private List<Sprite> HouseSprites;
     private SpriteRenderer spriteRenderer;
-    private List<HumanController> occupants = new();
+    public List<HumanController> occupants = new();
     private float lastPolledTime;
     private List<int> homeCapacityForLevel;
     private float timeSinceLastUpdate;
@@ -27,13 +27,26 @@ public class HomeController : MonoBehaviour
     {
         spriteRenderer.sprite = HouseSprites[level];
     }
-
-    void AddHuman()
+    public void AddHuman(HumanController human)
+    {
+        occupants.Add(human);
+        human.MoveMe(human.transform.position, this.transform.position, HumanState.MOVING_BACK_TO_HOUSE);        
+        Debug.Log("Occupant Count > " + occupants.Count());
+    }
+    public void SendHumanToWork(TreeController tree, HumanState state)
+    {
+        var randomHumanIndex = new System.Random().Next(0, occupants.Count() - 1);
+        occupants[randomHumanIndex].CreateWorkForMe(tree, state);
+    }
+    public void AddNewHuman()
     {
         var human1 = Instantiate(humanPrefab);
         var component = human1.GetComponent<HumanController>();
+        component.transform.position = this.transform.position;
         occupants.Add(component);
         Debug.Log("Occupant Count > " + occupants.Count());
+        GameManager.GetInstance().RegisterBirthForHuman(component);
+        
     }
 
     void IncreaseLevel()
@@ -53,8 +66,8 @@ public class HomeController : MonoBehaviour
         HouseSprites = new() { HouseSpriteLevel0, HouseSpriteLevel1, HouseSpriteLevel2 };
         spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
         UpdateSprite();
-        AddHuman();
-        AddHuman();
+        AddNewHuman();
+        AddNewHuman();
     }
 
     // Update is called once per frame
@@ -68,7 +81,7 @@ public class HomeController : MonoBehaviour
     {
         float currentTime = Time.time;
         timeSinceLastUpdate = currentTime - lastPolledTime;
-        if (timeSinceLastUpdate >= 3)
+        if (timeSinceLastUpdate >= 100)
         {
             float elapsedTime = currentTime - levelTime;
             humanCreationProbabilityThreshold = (float)Math.Max(0.3, 0.8 - (0.01 * elapsedTime));
