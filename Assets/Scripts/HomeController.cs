@@ -36,7 +36,8 @@ public class HomeController : MonoBehaviour
         Debug.Log("Occupant Count > " + occupants.Count());
     }
 
-    void IncreaseLevel() {
+    void IncreaseLevel()
+    {
         level++;
         levelTime = Time.time;
     }
@@ -59,11 +60,11 @@ public class HomeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RandomProbabilisticStrategy(occupants.Count(), homeCapacityForLevel[level]);
+        RandomProbabilisticStrategy(occupants.Count());
         //OnePairEachStrategy();
     }
 
-    void RandomProbabilisticStrategy(int populationCount, int maxPopulation)
+    void RandomProbabilisticStrategy(int populationCount)
     {
         float currentTime = Time.time;
         timeSinceLastUpdate = currentTime - lastPolledTime;
