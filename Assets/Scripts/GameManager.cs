@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public float woodForHomeLevel3 = 20;
 
     [Header("Tree Controls")]
+    public GameObject treeFab;
     public float oxygenFromTreeLevel1 = 1;
     public float oxygenFromTreeLevel2 = 5;
     public float oxygenFromTreeLevel3 = 20;
@@ -70,7 +71,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        // DEBUG POPULATION INCREASE
+        // #region DEBUG POPULATION INCREASE
         if (Input.GetMouseButtonDown(0))
         {            
             Vector2 mousePos = Input.mousePosition;
@@ -83,6 +84,23 @@ public class GameManager : MonoBehaviour
             g.transform.position = point;
             homes.Add(g.GetComponent<HomeController>());
         }
+        // #endregion
+
+        // #region DEBUG TREE SPAWN 
+        else if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Vector2 mousePos = Input.mousePosition;
+            // set the mousePos variable to the position of the mouse click (screen space)
+
+            Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, 10));
+            // set my spawn point variable by converting mousePos from screen space into world space
+            
+            GameObject g = Instantiate(treeFab);
+            g.transform.position = point;
+            trees.Add(g.GetComponent<TreeController>());
+
+        }
+        // #endregion
 
         var deltaTime = Time.deltaTime;
 
@@ -154,4 +172,8 @@ public class GameManager : MonoBehaviour
         newHuman.birthTime = Time.time;
         people.Add(newHuman);
     }
+
+    //#region Queue Management for Trees
+    
+    //#endregion
 }
