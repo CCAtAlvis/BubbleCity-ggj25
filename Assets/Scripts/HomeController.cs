@@ -9,12 +9,6 @@ public class HomeController : MonoBehaviour
     public List<HumanController> occupants;
     public float lastPolledTime;
     public List<int> HomeCapacityForLevel = new() { GameManager.GetInstance().homeCapacityLevel1, GameManager.GetInstance().homeCapacityLevel2, GameManager.GetInstance().homeCapacityLevel3 };
-    public void KickOccupant()
-    {
-        var occupant = occupants.Where(occu => occu.IsJobLess()).Last();
-        occupant.KickMe();
-        occupants.RemoveAt(-1);
-    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -22,6 +16,7 @@ public class HomeController : MonoBehaviour
         level = 0;
         lastPolledTime = Time.time;
     }
+
     private float timeSinceLastUpdate;
     private float levelTime;
     public GameObject humanPrefab;

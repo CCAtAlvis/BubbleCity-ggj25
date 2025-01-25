@@ -35,9 +35,9 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI homelessHumansText;
 
     private float totalOxygen;
-    private List<TreeController> trees = new List<TreeController>();
-    private List<HomeController> homes = new List<HomeController>();
-    private List<HumanController> people = new List<HumanController>();
+    private List<TreeController> trees = new();
+    private List<HomeController> homes = new();
+    private List<HumanController> people = new();
 
     private int totalHumans;
     private int homedHumans;
@@ -129,9 +129,9 @@ public class GameManager : MonoBehaviour
         timeSinceLastUpdate += Time.deltaTime;
         levelTime += Time.deltaTime;
 
-        oxygenText.text = "Oxygen: " + totalOxygen.ToString();
-        homedHumansText.text = "Homed Humans: " + homedHumans.ToString();
-        homelessHumansText.text = "Homeless Humans: " + homelessHumans.ToString();
+        // oxygenText.text = "Oxygen: " + totalOxygen.ToString();
+        // homedHumansText.text = "Homed Humans: " + homedHumans.ToString();
+        // homelessHumansText.text = "Homeless Humans: " + homelessHumans.ToString();
     }
 
     public void RegisterBirthForHuman(HumanController newHuman)
