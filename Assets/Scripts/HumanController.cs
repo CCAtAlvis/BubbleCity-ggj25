@@ -53,7 +53,6 @@ public class HumanController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("State > " + state.ToString());
         if (state == HumanState.AT_HOME) {
             this.transform.localScale = new Vector3(0, 0, 0);
         } else {
@@ -86,7 +85,6 @@ public class HumanController : MonoBehaviour
             float currentTime = Time.time;
             float difference = currentTime - startTime;
             if (difference >= 5) {
-                Debug.Log("Planting Done");
                 state = HumanState.TREE_DONE;
                 assignedTree.SetLevel(TreeLevel.SAPLING);
             }

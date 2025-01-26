@@ -50,7 +50,6 @@ public class TreeController : MonoBehaviour
     {
         this.level = level;
         startTime = Time.time;
-        Debug.Log("Level: " + level.ToString());
         UpdateSprite();
     }
 
@@ -92,6 +91,7 @@ public class TreeController : MonoBehaviour
 
     void OnMouseDown()
     {
+        Debug.Log("Tree tiggered");
         if (!isPopped) {
             if (level == TreeLevel.ADULT) {
                 Debug.Log("Adult Popped");
