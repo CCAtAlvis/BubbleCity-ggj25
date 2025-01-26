@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7500206026095021894}
   - component: {fileID: 6345969915253522873}
   - component: {fileID: 353566243747165881}
+  - component: {fileID: 3284476278451540090}
   m_Layer: 0
   m_Name: Tree
   m_TagString: Untagged
@@ -105,7 +106,9 @@ MonoBehaviour:
   TREE_SECOND_THRESHOLD_DURATION: 10
   TreeSpriteLevel0: {fileID: 3112372192525146747, guid: 1dbdd50993517e7f8bca69db0030b478, type: 3}
   TreeSpriteLevel1: {fileID: 2083804067306892795, guid: f1ca38fb33e3f12a5b845259285f518a, type: 3}
+  TreeSpriteLevel1Popped: {fileID: 662984786100566274, guid: 253b74f276c6e7ce1a92d94738811a21, type: 3}
   TreeSpriteLevel2: {fileID: 4805928820213045675, guid: 98c2970cf0d3f6cd4a57ba035ccbf3c5, type: 3}
+  TreeSpriteLevel2Popped: {fileID: -2849575449283047538, guid: cbc3b03ea8a00a14caa070b48336eae7, type: 3}
 --- !u!61 &353566243747165881
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -152,3 +155,25 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.37, y: 2.69}
   m_EdgeRadius: 0
+--- !u!95 &3284476278451540090
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4171026242833085949}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b84b1f8d1de5948eb9468f4206d51feb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
