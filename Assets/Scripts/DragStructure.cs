@@ -49,6 +49,7 @@ public class DragStructure : MonoBehaviour  , IBeginDragHandler, IDragHandler, I
         }else{
             Destroy(newInstance);
         }
+        isDragging = false;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

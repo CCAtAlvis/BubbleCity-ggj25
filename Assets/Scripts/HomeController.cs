@@ -2,12 +2,15 @@ using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
 using System;
+using NUnit.Framework.Constraints;
 
 public enum HomeLevel
 {
-    AWAITING_PLACEMENT,
+    AWAITING_BUILD,
+    AWAITING_UPGRADE,
     HUMAN_ALLOCATED,
     BUILDING_WIP,
+    UPGRADING_WIP,
     SMALL,
     MEDIUM,
     LARGE
@@ -20,6 +23,7 @@ public class HomeController : MonoBehaviour
     public HomeLevel level { get; private set; }
     public bool isActive;
     public GameObject humanPrefab;
+    public GameObject upgradeButton;
     public Sprite HouseSpriteLevel0;
     public Sprite HouseSpriteLevel1;
     public Sprite HouseSpriteLevel2;
@@ -39,7 +43,7 @@ public class HomeController : MonoBehaviour
     private void UpdateSprite()
     {
         spriteRenderer.sprite = HouseSprites[(int)level];
-        if (level == HomeLevel.AWAITING_PLACEMENT || level == HomeLevel.HUMAN_ALLOCATED || level == HomeLevel.BUILDING_WIP)
+        if (level == HomeLevel.AWAITING_BUILD || level == HomeLevel.HUMAN_ALLOCATED || level == HomeLevel.BUILDING_WIP)
         {
             spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
         }
@@ -64,6 +68,19 @@ public class HomeController : MonoBehaviour
         GameManager.GetInstance().RegisterBirthForHuman(component);
     }
 
+    private List<HumanController> Builders = new();
+    private float upgradeProgress = 0f;
+    public float UpgradeRateForOneHuman = 0.05f;
+    public void InvolveHumanForUpgrade(HumanController h) {
+        Builders.Add(h);
+    }
+
+    public void SendHumanToWork(HomeController home, HumanState state) {
+        var randomHumanIndex = new System.Random().Next(0, occupants.Count() - 1);
+        occupants[randomHumanIndex].CreateWorkForMe(home, state);
+        occupants.RemoveAt(randomHumanIndex);
+    }
+
     public void SendHumanToWork(TreeController tree, HumanState state)
     {
         var randomHumanIndex = new System.Random().Next(0, occupants.Count() - 1);
@@ -71,14 +88,21 @@ public class HomeController : MonoBehaviour
         occupants.RemoveAt(randomHumanIndex);
     }
 
-    void SetLevel(HomeLevel level)
+    public void SetLevel(HomeLevel level)
     {
         this.level = level;
         levelTime = Time.time;
+        if (level == HomeLevel.AWAITING_BUILD || level == HomeLevel.AWAITING_UPGRADE)
         UpdateSprite();
     }
 
     void Awake() {
+    }
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        lastPolledTime = Time.time;
         gameManager = GameManager.GetInstance();
         homeCapacityForLevel = new() { 0, 0, 0, gameManager.homeCapacityLevel1, gameManager.homeCapacityLevel2, gameManager.homeCapacityLevel3 };
         HouseSprites = new() { HouseSpriteLevel0, HouseSpriteLevel0, HouseSpriteLevel0, HouseSpriteLevel0, HouseSpriteLevel1, HouseSpriteLevel2 };
@@ -86,25 +110,34 @@ public class HomeController : MonoBehaviour
         SetLevel(HomeLevel.SMALL);
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        lastPolledTime = Time.time;
-    }
-
     // Update is called once per frame
     void Update()
     {
-        if (level >= HomeLevel.SMALL)
+        if (level >= HomeLevel.UPGRADING_WIP)
         {
             RandomProbabilisticStrategy(occupants.Count());
+        }
+        if (level == HomeLevel.UPGRADING_WIP || level == HomeLevel.BUILDING_WIP) {
+            if (upgradeProgress >= 1f) {
+                Builders.ForEach(b => {
+                    b.StopUpgradeWork();
+                });
+                if (level == HomeLevel.UPGRADING_WIP)
+                    UpgradeLevel();
+                else if (level == HomeLevel.BUILDING_WIP)
+                    SetLevel(levelBeforeBuildUpgrade);
+                Builders.Clear();
+                return;
+            }
+            upgradeProgress += Builders.Count * UpgradeRateForOneHuman;
+
         }
         //OnePairEachStrategy();
     }
 
     public void OnPlaced()
     {
-        SetLevel(HomeLevel.AWAITING_PLACEMENT);
+        SetLevel(HomeLevel.AWAITING_BUILD);
         GameManager.GetInstance().RegisterHome(this);
     }
 
@@ -154,6 +187,30 @@ public class HomeController : MonoBehaviour
             }
         }
     }
+
+    // #region Upgrade Home!
+    private bool isUpgradeOptionShown = false;
+    void OnMouseDown() {
+        Debug.Log($"Mouse Down on Home");
+
+        if (!isUpgradeOptionShown) {
+        Debug.Log($"Showing Upgrade");
+            isUpgradeOptionShown = true;
+            var position = new Vector3(transform.position.x, transform.position.y - 60, transform.position.z);
+            var instantiatedGameObject = Instantiate(upgradeButton, position, Quaternion.identity);
+
+        }
+    }
+
+    private HomeLevel levelBeforeBuildUpgrade;
+    public void IssueUpgradeNotice() {
+        levelBeforeBuildUpgrade = level;
+        SetLevel(HomeLevel.AWAITING_UPGRADE);
+    }
+    public void UpgradeLevel() {
+        SetLevel(levelBeforeBuildUpgrade++);        
+    }
+    // #endregion
 
     void OnePairEachStrategy()
     {

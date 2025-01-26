@@ -50,7 +50,6 @@ public class TreeController : MonoBehaviour
     {
         this.level = level;
         startTime = Time.time;
-        Debug.Log("Level: " + level.ToString());
         UpdateSprite();
     }
 
@@ -90,8 +89,7 @@ public class TreeController : MonoBehaviour
         isPlaced = true;
     }
 
-    void OnMouseDown()
-    {
+    public void Pop(){
         if (!isPopped) {
             if (level == TreeLevel.ADULT) {
                 Debug.Log("Adult Popped");
@@ -109,5 +107,9 @@ public class TreeController : MonoBehaviour
                 // Nope, nothing here!
             }
         }
+    }
+    void OnMouseDown()
+    {
+        Pop();
     }
 }
