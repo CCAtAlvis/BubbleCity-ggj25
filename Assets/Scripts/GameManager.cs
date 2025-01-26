@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
     {
         if (totalOxygen <= 0)
         {
-            Debug.Log("Game Over");
+            Debug.Log($"Game Over");
             return;
         }
         // totalOxygen += 1000*Time.deltaTime; 
@@ -187,7 +187,9 @@ public class GameManager : MonoBehaviour
     // #region Tree Queue Mechanism
     public void CheckTrees()
     {
-        foreach (var tree in trees.Where(t => t.level == TreeLevel.AWAITING_PLANTATION))
+        var treesRequiringPlantation = trees.Where(t => t.level == TreeLevel.AWAITING_PLANTATION); 
+        Debug.Log($"Trees Requiring Plantation: {treesRequiringPlantation.Count()}");
+        foreach (var tree in treesRequiringPlantation)
         {
             FindHumanNearestToTree(tree);
         }
@@ -212,7 +214,9 @@ public class GameManager : MonoBehaviour
     // #endregion
 
     public void CheckHumans() {
-        foreach (var human in people.Where(p => p.state == HumanState.HOMELESS || p.state == HumanState.TREE_DONE)) {
+        Debug.Log($"Available Humans : {people.Count()}");
+        var availableHumans = people.Where(p => p.state == HumanState.HOMELESS || p.state == HumanState.TREE_DONE || p.state == HumanState.HOUSE_DONE);
+        foreach (var human in availableHumans) {
             FindHouseNearestToHuman(human);
         }
     }
@@ -220,8 +224,11 @@ public class GameManager : MonoBehaviour
     public bool FindHouseNearestToHuman(HumanController human) {
         var availableHouses = homes.Where(h => h.occupants.Count < h.homeCapacityForLevel[(int)h.level]);
         if (availableHouses.Count() == 0) {
+            Debug.Log($"Human is now: Homeless");
             human.SetState(HumanState.HOMELESS);
+            return false;
         }
+
         var treeVector = new Vector2(human.transform.position.x, human.transform.position.y);
 
         var availableHousesSortedByDistance = availableHouses.OrderBy(house => {
@@ -236,13 +243,17 @@ public class GameManager : MonoBehaviour
     }
 
     public void CheckHomes() {
-        foreach (var home in homes.Where(p => p.level == HomeLevel.AWAITING_BUILD || p.level == HomeLevel.AWAITING_UPGRADE || p.level == HomeLevel.BUILDING_WIP || p.level == HomeLevel.UPGRADING_WIP)) {
+        Debug.Log($"Available Homes : {homes.Count()}");
+        var homesForUpgrade = homes.Where(p => p.level == HomeLevel.AWAITING_BUILD || p.level == HomeLevel.AWAITING_UPGRADE || p.level == HomeLevel.BUILDING_WIP || p.level == HomeLevel.UPGRADING_WIP);
+        Debug.Log($"Upgrade/Build Candidates : {homes.Count()}");
+        foreach (var home in homesForUpgrade) {
             SendNearestHumanToHome(home);
         }
     }
 
     public bool SendNearestHumanToHome(HomeController home) {
         if (home.occupants.Count > 0) {
+            Debug.Log($"Sending Worker from own home");
             home.SendHumanToWork(home, HumanState.MOVING_FOR_HOMEUPGRADE);
             return true;
         }
@@ -250,6 +261,7 @@ public class GameManager : MonoBehaviour
         var availableHouses = homes.Where(h => h.occupants.Count > 0);
             
         if (availableHouses.Count() == 0) return false;
+
         var treeVector = new Vector2(home.transform.position.x, home.transform.position.y);
 
         var availableHousesSortedByDistance = availableHouses.OrderBy(house => {
@@ -259,6 +271,7 @@ public class GameManager : MonoBehaviour
         });
 
         var theChosenHouse = availableHousesSortedByDistance.First();
+        Debug.Log($"Sending worker from diff house");
         theChosenHouse.SendHumanToWork(home, HumanState.MOVING_FOR_HOMEUPGRADE);
         return true;
     }

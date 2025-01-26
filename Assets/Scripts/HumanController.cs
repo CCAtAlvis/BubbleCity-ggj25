@@ -83,12 +83,14 @@ public class HumanController : MonoBehaviour
 
         if (state == HumanState.MOVING_FOR_HOMEUPGRADE)
         {
+            Debug.Log($"Moving for Upgrade");
             float elapsedTime = Time.time - startTime;
             float t = Mathf.Clamp01(elapsedTime / duration);
             transform.position = Vector3.Lerp(startPosition, endPosition, Mathf.SmoothStep(0f, 1f, t));
 
             if (elapsedTime >= duration)
             {
+                            Debug.Log($"Reached Home for Upgrade");
                 isMoving = false;
                 transform.position = endPosition;
                 state = HumanState.BUILDING_HOUSE;
