@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
     {
         var home = Instantiate(homeFab, new Vector2(0, 0), Quaternion.identity);
         var homeController = home.GetComponent<HomeController>();
-        homes.Add(homeController);
+        homeController.OnPlaced();
         homeController.AddNewHuman();
         homeController.AddNewHuman();
     }
@@ -121,13 +121,13 @@ public class GameManager : MonoBehaviour
             if (!home.isActive) continue;
             switch (home.level)
             {
-                case 1:
+                case HomeLevel.SMALL:
                     totalPlace += homeCapacityLevel1;
                     break;
-                case 2:
+                case HomeLevel.MEDIUM:
                     totalPlace += homeCapacityLevel2;
                     break;
-                case 3:
+                case HomeLevel.LARGE:
                     totalPlace += homeCapacityLevel3;
                     break;
             }
@@ -165,7 +165,8 @@ public class GameManager : MonoBehaviour
         trees.Add(tree);
     }
 
-    public void RegisteredHomePlaced(HomeController home) {
+    public void RegisterHome(HomeController home) {
+        Debug.Log("Home Added");
         homes.Add(home);
     }
 
@@ -180,7 +181,10 @@ public class GameManager : MonoBehaviour
 
     public bool FindHumanNearestToTree(TreeController tree)
     {
-        var availableHouses = homes.Where(h => h.occupants.Count > 0);
+                        Debug.Log("Houses now: " + homes.Count());
+
+        var availableHouses = homes.Where(h => h.occupants.Count > 0 && h.level != HomeLevel.NOT_PLACED);
+                Debug.Log("Available Houses now: " + availableHouses.Count());
         if (availableHouses.Count() == 0) return false;
         var treeVector = new Vector2(tree.transform.position.x, tree.transform.position.y);
 
@@ -197,7 +201,7 @@ public class GameManager : MonoBehaviour
     // #endregion
 
     public void CheckHumans() {
-        // Debug.Log("Humans now: " + people.Count());
+        Debug.Log("Humans now: " + people.Count());
         foreach (var human in people.Where(p => p.state == HumanState.HOMELESS || p.state == HumanState.TREE_DONE)) {
             Debug.Log("Find House Near to Human: " + human.state.ToString());
             FindHouseNearestToHuman(human);
@@ -205,7 +209,7 @@ public class GameManager : MonoBehaviour
     }
 
     public bool FindHouseNearestToHuman(HumanController human) {
-                var availableHouses = homes.Where(h => h.occupants.Count > 0);
+        var availableHouses = homes.Where(h => h.occupants.Count > 0);
         if (availableHouses.Count() == 0) return false;
         var treeVector = new Vector2(human.transform.position.x, human.transform.position.y);
 

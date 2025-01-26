@@ -1,5 +1,6 @@
 using System.IO.Compression;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum HumanState
 {
@@ -23,14 +24,12 @@ public class HumanController : MonoBehaviour
     public void KickMe() {
         assignedHouse = null;
         state = HumanState.HOMELESS;
-        this.transform.localScale = new Vector3(1, 1, 1);
     }
 
     public void AssignMe(HomeController newHome) {
         assignedHouse = newHome;
         StopWorkForMe();
         state = HumanState.AT_HOME;
-        this.transform.localScale = new Vector3(0, 0, 0);
     }
 
     public void CreateWorkForMe(TreeController newTree, HumanState state) {
@@ -47,15 +46,22 @@ public class HumanController : MonoBehaviour
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
-    {
-        
+    { 
     }
 
     // Update is called once per frame
     void Update()
     {
         Debug.Log("State > " + state.ToString());
+        if (state == HumanState.AT_HOME) {
+            this.transform.localScale = new Vector3(0, 0, 0);
+        } else {
+            this.transform.localScale = new Vector3(1, 1, 1);
+        }
 
+        var text = this.GetComponent<Text>();
+        text.text = $"H: {birthTime}";
+    
         if (state == HumanState.HOMELESS) {
             // TODO Move Randomly!
         }

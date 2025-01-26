@@ -3,11 +3,19 @@ using System.Linq;
 using System.Collections.Generic;
 using System;
 
+public enum HomeLevel
+{
+    NOT_PLACED,
+    SMALL,
+    MEDIUM,
+    LARGE
+}
+
 public class HomeController : MonoBehaviour
 {
 
     public float thresholdForHumanCreation = 15f;
-    public int level { get; private set; }
+    public HomeLevel level { get; private set; }
     public bool isActive;
     public GameObject humanPrefab;
     public Sprite HouseSpriteLevel0;
@@ -24,13 +32,12 @@ public class HomeController : MonoBehaviour
     private int pairs = 0;
     private bool isSingleHumanLeftOutInPairing = false;
     private float humanCreationProbabilityThreshold = 0.9f;
-
-    private bool isPlaced = false;
     private GameManager gameManager;
 
     private void UpdateSprite()
     {
-        spriteRenderer.sprite = HouseSprites[level];
+        
+        spriteRenderer.sprite = HouseSprites[(int) level];
     }
 
     public void AddHuman(HumanController human)
@@ -44,6 +51,7 @@ public class HomeController : MonoBehaviour
         var human = Instantiate(humanPrefab);
         var component = human.GetComponent<HumanController>();
         occupants.Add(component);
+        component.AssignMe(this);
         GameManager.GetInstance().RegisterBirthForHuman(component);
     }
 
@@ -51,32 +59,31 @@ public class HomeController : MonoBehaviour
     {
         var randomHumanIndex = new System.Random().Next(0, occupants.Count() - 1);
         occupants[randomHumanIndex].CreateWorkForMe(tree, state);
+        occupants.RemoveAt(randomHumanIndex);
     }
 
-    void IncreaseLevel()
+    void SetLevel(HomeLevel level)
     {
-        level++;
+        this.level = level;
         levelTime = Time.time;
+        UpdateSprite();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         gameManager = GameManager.GetInstance();
-
-        level = 0;
         lastPolledTime = Time.time;
-        levelTime = Time.time;
-        homeCapacityForLevel = new() { gameManager.homeCapacityLevel1, gameManager.homeCapacityLevel2, gameManager.homeCapacityLevel3 };
-        HouseSprites = new() { HouseSpriteLevel0, HouseSpriteLevel1, HouseSpriteLevel2 };
+        homeCapacityForLevel = new() { 0, gameManager.homeCapacityLevel1, gameManager.homeCapacityLevel2, gameManager.homeCapacityLevel3 };
+        HouseSprites = new() { HouseSpriteLevel0 /*TODO with reduced opacity*/, HouseSpriteLevel0, HouseSpriteLevel1, HouseSpriteLevel2 };
         spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
-        UpdateSprite();
+        SetLevel(HomeLevel.NOT_PLACED);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isPlaced)
+        if (level >= HomeLevel.SMALL)
         {
             RandomProbabilisticStrategy(occupants.Count());
         }
@@ -84,8 +91,8 @@ public class HomeController : MonoBehaviour
     }
 
     public void OnPlaced() {
-        isPlaced = true;
-        GameManager.GetInstance().RegisteredHomePlaced(this);
+        SetLevel(HomeLevel.SMALL);
+        GameManager.GetInstance().RegisterHome(this);
     }
 
     void RandomProbabilisticStrategy(int populationCount)
@@ -108,7 +115,7 @@ public class HomeController : MonoBehaviour
                     var human = Instantiate(humanPrefab);
                     var humanController = human.GetComponent<HumanController>();
 
-                    if (occupants.Count > homeCapacityForLevel[level])
+                    if (occupants.Count > homeCapacityForLevel[(int) level])
                     {
                         humanController.KickMe();
                     }
@@ -154,7 +161,7 @@ public class HomeController : MonoBehaviour
                 var human = Instantiate(humanPrefab);
                 var humanController = human.GetComponent<HumanController>();
                 // Home decides if this new human can belong here
-                if (occupants.Count > homeCapacityForLevel[level])
+                if (occupants.Count > homeCapacityForLevel[(int) level])
                 {
                     humanController.KickMe();
                 }
