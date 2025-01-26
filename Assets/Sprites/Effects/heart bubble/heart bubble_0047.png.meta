@@ -372,7 +372,17 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      heart bubble_0047_0: -3235753854584000951
+      heart bubble_0047_1: -7276208662979831056
+      heart bubble_0047_2: 678354230113609546
+      heart bubble_0047_3: -6929680284123009855
+      heart bubble_0047_4: -7545454093555836748
+      heart bubble_0047_5: -2136970985794435119
+      heart bubble_0047_6: 4343147156853211409
+      heart bubble_0047_7: 1305166478497990581
+      heart bubble_0047_8: 7502056664126388191
+      heart bubble_0047_9: -5841709795301687994
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

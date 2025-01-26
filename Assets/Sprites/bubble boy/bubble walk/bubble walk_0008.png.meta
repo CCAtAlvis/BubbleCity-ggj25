@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      bubble walk_0008_0: 6649072201830143499
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -647,7 +647,28 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      bubble tree pop_0012_0: 4949522963251716636
+      bubble tree pop_0012_1: 4589581223298123720
+      bubble tree pop_0012_10: -8151224875834187803
+      bubble tree pop_0012_11: -1504798846647822632
+      bubble tree pop_0012_12: -8766637845485855854
+      bubble tree pop_0012_13: 5879373650232010136
+      bubble tree pop_0012_14: 8508512662194937814
+      bubble tree pop_0012_15: 4272091956261534618
+      bubble tree pop_0012_16: 3861864997947919590
+      bubble tree pop_0012_17: -3698919576775650974
+      bubble tree pop_0012_18: 3417656540824056732
+      bubble tree pop_0012_19: -2820313856362572703
+      bubble tree pop_0012_2: 8641468099793133343
+      bubble tree pop_0012_20: -2370555672298060844
+      bubble tree pop_0012_3: -7832679440269663725
+      bubble tree pop_0012_4: 285745127790093379
+      bubble tree pop_0012_5: -7094704255689373179
+      bubble tree pop_0012_6: 5175395746367022620
+      bubble tree pop_0012_7: 3809678567749091034
+      bubble tree pop_0012_8: -2240180839768025382
+      bubble tree pop_0012_9: 3255790210388260469
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

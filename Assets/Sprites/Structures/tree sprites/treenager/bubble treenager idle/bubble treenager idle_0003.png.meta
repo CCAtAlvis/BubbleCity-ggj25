@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      bubble treenager idle_0003_0: 4838228294090621552
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

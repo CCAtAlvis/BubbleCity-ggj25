@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      sapling idle_0002_0: 2830288959705891658
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

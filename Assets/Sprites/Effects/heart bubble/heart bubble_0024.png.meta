@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      heart bubble_0024_0: -326301717823409057
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
