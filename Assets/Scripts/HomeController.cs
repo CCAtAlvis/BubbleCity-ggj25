@@ -104,9 +104,9 @@ public class HomeController : MonoBehaviour
     {
         lastPolledTime = Time.time;
         gameManager = GameManager.GetInstance();
-        homeCapacityForLevel = new() { 0, 0, 0, gameManager.homeCapacityLevel1, gameManager.homeCapacityLevel2, gameManager.homeCapacityLevel3 };
-        HouseSprites = new() { HouseSpriteLevel0, HouseSpriteLevel0, HouseSpriteLevel0, HouseSpriteLevel0, HouseSpriteLevel1, HouseSpriteLevel2 };
-        spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
+        homeCapacityForLevel = new() { 0, 0, 0, 0, 0, gameManager.homeCapacityLevel1, gameManager.homeCapacityLevel2, gameManager.homeCapacityLevel3 };
+        HouseSprites = new() { HouseSpriteLevel0, HouseSpriteLevel0, HouseSpriteLevel0, HouseSpriteLevel0, HouseSpriteLevel0, HouseSpriteLevel0, HouseSpriteLevel1, HouseSpriteLevel2 };
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         SetLevel(HomeLevel.SMALL);
     }
 
