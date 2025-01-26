@@ -90,7 +90,7 @@ public class GridController : MonoBehaviour
                 else
                 {
                     var tile = Instantiate(tilePrefab);
-                    tile.transform.position = new Vector3(coord.x, coord.y, j * -1);
+                    tile.transform.position = new Vector3(coord.x, coord.y, -1);
                     // tile.sortingOrder = j * -1;
 
                     // Add TileController component and configure it
