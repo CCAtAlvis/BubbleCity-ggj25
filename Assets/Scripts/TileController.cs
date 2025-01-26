@@ -55,7 +55,6 @@ public class TileController : MonoBehaviour
         }
         if (GameManager.GetInstance().isHoverActive && isWithinDiameter)
         {
-            Debug.LogWarning("yes");
             highlighter.SetActive(true);
             GameManager.GetInstance().isHoveredGridEmpty = structureType.IsUnityNull();
             GameManager.GetInstance().hoveredGrid = this;
