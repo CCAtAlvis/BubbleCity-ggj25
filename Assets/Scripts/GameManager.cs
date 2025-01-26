@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -33,6 +34,12 @@ public class GameManager : MonoBehaviour
     public float woodFromTreeLevel2 = 5;
     public float woodFromTreeLevel3 = 20;
 
+    public Boolean isHoveredGridEmpty = false;
+
+    public Boolean isHoverActive =  false;
+
+    public TileController hoveredGrid;
+
     // [Header("UI")]
     // public TextMeshProUGUI oxygenText;
     // public TextMeshProUGUI homedHumansText;
@@ -56,13 +63,15 @@ public class GameManager : MonoBehaviour
         if (instance == null)
             instance = this;
         else
-            Destroy(instance);
+            Destroy(this);
+
+        totalOxygen = initialOxygen;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        totalOxygen = initialOxygen;
+        // totalOxygen = initialOxygen;
     }
 
     // Update is called once per frame
@@ -73,38 +82,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Game Over");
             return;
         }
-        totalOxygen += 1000*Time.deltaTime; 
-
-        // #region DEBUG POPULATION INCREASE
-        if (Input.GetMouseButtonDown(0))
-        {            
-            Vector2 mousePos = Input.mousePosition;
-            // set the mousePos variable to the position of the mouse click (screen space)
-
-            Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, 10));
-            // set my spawn point variable by converting mousePos from screen space into world space
-            
-            GameObject g = Instantiate(homeFab);
-            g.transform.position = point;
-            homes.Add(g.GetComponent<HomeController>());
-        }
-        // #endregion
-
-        // #region DEBUG TREE SPAWN 
-        else if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Vector2 mousePos = Input.mousePosition;
-            // set the mousePos variable to the position of the mouse click (screen space)
-
-            Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, 10));
-            // set my spawn point variable by converting mousePos from screen space into world space
-            
-            GameObject g = Instantiate(treeFab);
-            g.transform.position = point;
-            trees.Add(g.GetComponent<TreeController>());
-
-        }
-        // #endregion
+        // totalOxygen += 1000*Time.deltaTime; 
 
         var deltaTime = Time.deltaTime;
 
@@ -207,7 +185,7 @@ public class GameManager : MonoBehaviour
     // #endregion
 
     public void CheckHumans() {
-        Debug.Log("Humans now: " + people.Count());
+        // Debug.Log("Humans now: " + people.Count());
         foreach (var human in people.Where(p => p.state == HumanState.HOMELESS || p.state == HumanState.TREE_DONE)) {
             Debug.Log("Find House Near to Human: " + human.state.ToString());
             FindHouseNearestToHuman(human);

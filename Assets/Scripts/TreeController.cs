@@ -22,6 +22,7 @@ public class TreeController : MonoBehaviour
     public Sprite TreeSpriteLevel2;
     private List<Sprite> TreeSprites;
     private SpriteRenderer spriteRenderer;
+    public Boolean isPlaced = false;
     private void UpdateSprite()
     {
         spriteRenderer.sprite = TreeSprites[(int)level];
@@ -44,7 +45,8 @@ public class TreeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (level == TreeLevel.SAPLING || level == TreeLevel.TEEN || level == TreeLevel.ADULT)
+        print(level);
+        if (isPlaced && (level == TreeLevel.SAPLING || level == TreeLevel.TEEN || level == TreeLevel.ADULT))
         {
             var currentTime = Time.time;
             var difference = currentTime - startTime;
