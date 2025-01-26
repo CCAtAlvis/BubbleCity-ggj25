@@ -20,14 +20,24 @@ public class TreeController : MonoBehaviour
     public TreeLevel level { get; private set; }
     public Sprite TreeSpriteLevel0;
     public Sprite TreeSpriteLevel1;
+    public Sprite TreeSpriteLevel1Popped;
     public Sprite TreeSpriteLevel2;
+    public Sprite TreeSpriteLevel2Popped;
     private List<Sprite> TreeSprites;
     private SpriteRenderer spriteRenderer;
     private bool isPlaced = false;
+    private bool isPopped = false;
 
     private void UpdateSprite()
     {
-        spriteRenderer.sprite = TreeSprites[(int)level];
+        if (!isPopped) {
+            spriteRenderer.sprite = TreeSprites[(int)level];
+        } else {
+            if (level == TreeLevel.TEEN)
+                spriteRenderer.sprite = TreeSpriteLevel1Popped;
+            else if (level == TreeLevel.ADULT)
+                spriteRenderer.sprite = TreeSpriteLevel2Popped;
+        }
 
         if (level == TreeLevel.AWAITING_PLANTATION || level == TreeLevel.HUMAN_ALLOCATED_FOR_PLANTATION || level == TreeLevel.PLANTATION_IN_PROGRESS) {
             spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
@@ -39,6 +49,8 @@ public class TreeController : MonoBehaviour
     public void SetLevel(TreeLevel level)
     {
         this.level = level;
+        startTime = Time.time;
+        Debug.Log("Level: " + level.ToString());
         UpdateSprite();
     }
 
@@ -58,12 +70,14 @@ public class TreeController : MonoBehaviour
             var currentTime = Time.time;
             var difference = currentTime - startTime;
 
-            if (difference > TREE_FIRST_THRESHOLD_DURATION)
+            if ((level == TreeLevel.SAPLING || (level == TreeLevel.TEEN && isPopped == true)) && difference > TREE_FIRST_THRESHOLD_DURATION)
             {
+                isPopped = false;
                 SetLevel(TreeLevel.TEEN);
             }
-            if (difference > TREE_SECOND_THRESHOLD_DURATION)
+            if ((level == TreeLevel.TEEN || (level == TreeLevel.ADULT && isPopped == true)) && difference > TREE_SECOND_THRESHOLD_DURATION)
             {
+                isPopped = false;
                 SetLevel(TreeLevel.ADULT);
             }
         }
@@ -78,11 +92,22 @@ public class TreeController : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (level == TreeLevel.ADULT) {
-            GameManager.GetInstance().UpdateOxygen(GameManager.GetInstance().oxygenFromTreeLevel3);
-        } else if (level == TreeLevel.TEEN) {
-            GameManager.GetInstance().UpdateOxygen(GameManager.GetInstance().oxygenFromTreeLevel2);
-        } else if (level == TreeLevel.SAPLING) {
+        if (!isPopped) {
+            if (level == TreeLevel.ADULT) {
+                Debug.Log("Adult Popped");
+                isPopped = true;
+                startTime = Time.time;
+                GameManager.GetInstance().UpdateOxygen(GameManager.GetInstance().oxygenFromTreeLevel3);
+                UpdateSprite();
+            } else if (level == TreeLevel.TEEN) {
+                Debug.Log("Teen Popped");
+                isPopped = true;
+                startTime = Time.time;
+                GameManager.GetInstance().UpdateOxygen(GameManager.GetInstance().oxygenFromTreeLevel2);
+                UpdateSprite();
+            } else if (level == TreeLevel.SAPLING) {
+                // Nope, nothing here!
+            }
         }
     }
 }

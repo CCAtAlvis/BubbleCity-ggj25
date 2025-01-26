@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
     [Header("Tree Controls")]
     public GameObject treeFab;
     public float oxygenFromTreeLevel1 = 1;
-    public float oxygenFromTreeLevel2 = 5;
+    public float oxygenFromTreeLevel2 = 1000;
     public float oxygenFromTreeLevel3 = 20;
     public float woodFromTreeLevel1 = 1;
     public float woodFromTreeLevel2 = 5;
