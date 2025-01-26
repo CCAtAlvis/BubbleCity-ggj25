@@ -8,7 +8,7 @@ public class BubbleScaler : MonoBehaviour
 
     private Transform transform;
 
-    private float growthSpeed = 0.2f;
+    private float growthSpeed = 0.4f;
     void Start()
     {
         gridController = GridController.GetInstance();

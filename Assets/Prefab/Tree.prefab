@@ -148,8 +148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ba8e82ef3957403fb38e83ca0ed83a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TREE_FIRST_THRESHOLD_DURATION: 5
-  TREE_SECOND_THRESHOLD_DURATION: 10
+  TREE_FIRST_THRESHOLD_DURATION: 10
+  TREE_SECOND_THRESHOLD_DURATION: 50
   TreeSpriteLevel0: {fileID: 21300000, guid: 1dbdd50993517e7f8bca69db0030b478, type: 3}
   TreeSpriteLevel1: {fileID: 21300000, guid: f1ca38fb33e3f12a5b845259285f518a, type: 3}
   TreeSpriteLevel1Popped: {fileID: 21300000, guid: 253b74f276c6e7ce1a92d94738811a21, type: 3}

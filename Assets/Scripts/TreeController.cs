@@ -106,7 +106,7 @@ public class TreeController : MonoBehaviour
                 Debug.Log("Adult Popped");
                 isPopped = true;
                 startTime = Time.time;
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(0.8f);
                 GameManager.GetInstance().UpdateOxygen(GameManager.GetInstance().oxygenFromTreeLevel3);
                 UpdateSprite();
             } else if (level == TreeLevel.TEEN) {
@@ -115,7 +115,7 @@ public class TreeController : MonoBehaviour
                 isPopped = true;
                 startTime = Time.time;
                 GameManager.GetInstance().UpdateOxygen(GameManager.GetInstance().oxygenFromTreeLevel2);
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(0.5f);
                 UpdateSprite();
             } else if (level == TreeLevel.SAPLING) {
                 // Nope, nothing here!

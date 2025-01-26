@@ -54,10 +54,7 @@ public class GridController : MonoBehaviour
             return;
         }
 
-        if (diameter > maxGridDiameter)
-        {
-            setGridSize(diameter);
-        }
+        setGridSize(diameter);
     }
 
     public void setGridSize(int diameter)
@@ -117,7 +114,7 @@ public class GridController : MonoBehaviour
 
     private bool IsWithinGridBounds(int i, int j, int radius)
     {
-        return Mathf.Sqrt(Mathf.Pow(i,2) + Mathf.Pow(j,2)) <= radius;
+        return Mathf.Sqrt(Mathf.Pow(i, 2) + Mathf.Pow(j, 2)) <= radius;
     }
 
     public TileController GetTileAt(Vector2Int coordinate)
