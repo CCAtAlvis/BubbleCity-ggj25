@@ -76,12 +76,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 1
-  alignment: 0
-  spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spriteMeshType: 0
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.3}
+  spritePixelsToUnits: 1440
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -388,7 +388,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -397,7 +397,18 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      bubble treenager pop_0007_0: -4913893983102460298
+      bubble treenager pop_0007_1: -3693884397258758770
+      bubble treenager pop_0007_10: -4477381051454678960
+      bubble treenager pop_0007_2: -7354528538290623555
+      bubble treenager pop_0007_3: 4170437159910557631
+      bubble treenager pop_0007_4: 7271938959409220180
+      bubble treenager pop_0007_5: 2754296646719413000
+      bubble treenager pop_0007_6: -8633368590883189870
+      bubble treenager pop_0007_7: 6851338783770743653
+      bubble treenager pop_0007_8: 6349010845634854362
+      bubble treenager pop_0007_9: 7676660629571593467
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -73,12 +73,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 1
-  alignment: 0
-  spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spriteMeshType: 0
+  alignment: 9
+  spritePivot: {x: 0.515, y: 0.45}
+  spritePixelsToUnits: 1440
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -363,7 +363,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -372,7 +372,17 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      heart bubble_0048_0: -8852068450275969374
+      heart bubble_0048_1: 7013235901278444287
+      heart bubble_0048_2: 4384112023707671551
+      heart bubble_0048_3: 2251269077067992975
+      heart bubble_0048_4: 8878739916070656052
+      heart bubble_0048_5: -2909905685630071471
+      heart bubble_0048_6: -4372702684607737016
+      heart bubble_0048_7: 2942760148782704490
+      heart bubble_0048_8: -7085710343299078442
+      heart bubble_0048_9: 9127871888240307079
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

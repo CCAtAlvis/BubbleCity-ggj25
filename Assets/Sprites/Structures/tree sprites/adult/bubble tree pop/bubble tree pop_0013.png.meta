@@ -70,12 +70,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 1
-  alignment: 0
-  spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spriteMeshType: 0
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.3}
+  spritePixelsToUnits: 1440
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -338,7 +338,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -347,7 +347,16 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      bubble tree pop_0013_0: -3950601729165937905
+      bubble tree pop_0013_1: -738965008418028575
+      bubble tree pop_0013_2: -2044773433045125183
+      bubble tree pop_0013_3: -2387796564155796416
+      bubble tree pop_0013_4: -5917046256623316961
+      bubble tree pop_0013_5: -6490551167433132728
+      bubble tree pop_0013_6: -8808540813474910131
+      bubble tree pop_0013_7: -4178196998635253249
+      bubble tree pop_0013_8: 650629908588239696
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

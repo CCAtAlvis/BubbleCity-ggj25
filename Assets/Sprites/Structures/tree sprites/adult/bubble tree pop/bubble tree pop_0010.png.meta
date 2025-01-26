@@ -160,12 +160,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 1
-  alignment: 0
-  spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spriteMeshType: 0
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.3}
+  spritePixelsToUnits: 1440
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -1088,7 +1088,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -1097,7 +1097,46 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      bubble tree pop_0010_0: -3012839106819993879
+      bubble tree pop_0010_1: -6773213774258118109
+      bubble tree pop_0010_10: -3541286376822001975
+      bubble tree pop_0010_11: 1965205813626542704
+      bubble tree pop_0010_12: 923080044828256940
+      bubble tree pop_0010_13: -2950923085706960142
+      bubble tree pop_0010_14: 7027349455076050593
+      bubble tree pop_0010_15: 5284134255356056128
+      bubble tree pop_0010_16: 5764036492756845548
+      bubble tree pop_0010_17: 561316058270368699
+      bubble tree pop_0010_18: -7131742596378074522
+      bubble tree pop_0010_19: 578365341845384088
+      bubble tree pop_0010_2: -2432029884460045806
+      bubble tree pop_0010_20: -551248025238907569
+      bubble tree pop_0010_21: -1686130769289128893
+      bubble tree pop_0010_22: -1200566896526406602
+      bubble tree pop_0010_23: -1644559148028384071
+      bubble tree pop_0010_24: -8288365819529291046
+      bubble tree pop_0010_25: 1373776859276603842
+      bubble tree pop_0010_26: -361476011692141329
+      bubble tree pop_0010_27: 9121888155469385150
+      bubble tree pop_0010_28: -2376946261661352706
+      bubble tree pop_0010_29: 5477796560476300795
+      bubble tree pop_0010_3: -2896263516242028586
+      bubble tree pop_0010_30: 7319519441170769247
+      bubble tree pop_0010_31: -6727358918250679711
+      bubble tree pop_0010_32: 985860877195037101
+      bubble tree pop_0010_33: -5017943996252119650
+      bubble tree pop_0010_34: -6644436253188101866
+      bubble tree pop_0010_35: -5517998424267771277
+      bubble tree pop_0010_36: -5556436946787646113
+      bubble tree pop_0010_37: 3674809963989093659
+      bubble tree pop_0010_38: 1708895994027213212
+      bubble tree pop_0010_4: -6758443416479435758
+      bubble tree pop_0010_5: 7389647848880997869
+      bubble tree pop_0010_6: -3128174855672072201
+      bubble tree pop_0010_7: -6483476590453689493
+      bubble tree pop_0010_8: 1285659874209533572
+      bubble tree pop_0010_9: -4692826433168920195
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

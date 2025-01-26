@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      square_wood_high_E_0: -4216092355217744403
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
