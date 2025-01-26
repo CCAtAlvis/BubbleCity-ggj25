@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: ba04ed23296d0450c88d2e441d336c69
+guid: 81e9d6c57a2b2495eba1a5e9274f7bfd
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4216092355217744403
-    second: square_wood_high_E_0
+      213: -9157886645068195036
+    second: Sceen 5_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: square_wood_high_E_0
+      name: Sceen 5_0
       rect:
         serializedVersion: 2
-        x: 37
-        y: 18
-        width: 182
-        height: 116
+        x: 0
+        y: 0
+        width: 1920
+        height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ded910b375e6d75c0800000000000000
-      internalID: -4216092355217744403
+      spriteID: 42b9a6bed96a8e080800000000000000
+      internalID: -9157886645068195036
       vertices: []
       indices: 
       edges: []
@@ -147,8 +147,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      square_wood_high_E_0: -4216092355217744403
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
