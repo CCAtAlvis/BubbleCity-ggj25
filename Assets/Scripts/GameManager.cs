@@ -231,8 +231,3 @@ public class GameManager : MonoBehaviour
     }
 
 }
-
-public enum HumanWorkType {
-    PLANTATION = 0,
-    BUILDING_UPGRADE = 1
-}
