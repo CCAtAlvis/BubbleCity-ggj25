@@ -60,9 +60,6 @@ public class HumanController : MonoBehaviour
             this.transform.localScale = new Vector3(1, 1, 1);
         }
 
-        var text = this.GetComponent<Text>();
-        text.text = $"H: {birthTime}";
-    
         if (state == HumanState.HOMELESS) {
             // TODO Move Randomly!
         }

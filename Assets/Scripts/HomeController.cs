@@ -79,17 +79,17 @@ public class HomeController : MonoBehaviour
     }
 
     void Awake() {
-        gameManager = GameManager.GetInstance();
-        homeCapacityForLevel = new() { 0, 0, 0, gameManager.homeCapacityLevel1, gameManager.homeCapacityLevel2, gameManager.homeCapacityLevel3 };
-        HouseSprites = new() { HouseSpriteLevel0, HouseSpriteLevel0, HouseSpriteLevel0, HouseSpriteLevel0, HouseSpriteLevel1, HouseSpriteLevel2 };
-        spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
-        SetLevel(HomeLevel.SMALL);
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         lastPolledTime = Time.time;
+        gameManager = GameManager.GetInstance();
+        homeCapacityForLevel = new() { 0, 0, 0, gameManager.homeCapacityLevel1, gameManager.homeCapacityLevel2, gameManager.homeCapacityLevel3 };
+        HouseSprites = new() { HouseSpriteLevel0, HouseSpriteLevel0, HouseSpriteLevel0, HouseSpriteLevel0, HouseSpriteLevel1, HouseSpriteLevel2 };
+        spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
+        SetLevel(HomeLevel.SMALL);
     }
 
     // Update is called once per frame

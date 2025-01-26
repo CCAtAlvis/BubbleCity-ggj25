@@ -10,6 +10,9 @@ public class TileController : MonoBehaviour
     public GameObject structureType;
     public GameObject highlighter;
 
+    public float i = 0f;
+    public float j = 0f;
+
     private Color[] HighlightColor = { new Color(0f, 1f, 0f, 0.7f), new Color(1f, 0, 0, 0.7f), new Color(0, 0, 0, 0.3f) };
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

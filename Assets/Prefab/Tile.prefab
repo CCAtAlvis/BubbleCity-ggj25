@@ -159,7 +159,7 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.3322}
+    pivot: {x: 0.502, y: 0.3322}
     oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
@@ -168,10 +168,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0, y: 3}
-      - {x: -5.8, y: 0}
-      - {x: 0, y: -3}
-      - {x: 5.8, y: 0}
+    - - {x: 0, y: 0.2}
+      - {x: -0.4, y: 0}
+      - {x: 0, y: -0.2}
+      - {x: 0.4, y: 0}
   m_UseDelaunayMesh: 1
 --- !u!114 &1212165461596886536
 MonoBehaviour:
@@ -187,6 +187,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   structureType: {fileID: 0}
   highlighter: {fileID: 8542884722887120354}
+  i: 0
+  j: 0
 --- !u!1 &8542884722887120354
 GameObject:
   m_ObjectHideFlags: 0
@@ -203,7 +205,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3732845351178269174
 Transform:
   m_ObjectHideFlags: 0

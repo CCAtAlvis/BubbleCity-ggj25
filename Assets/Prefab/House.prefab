@@ -102,10 +102,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thresholdForHumanCreation: 15
   isActive: 0
-  humanPrefab: {fileID: 8193739780155998668, guid: 1048aa62c3e214884b419c35602c57e2, type: 3}
-  upgradeButton: {fileID: 7342351611311291642, guid: bc24aa6781c3047e1b23e11ace9d9f22, type: 3}
-  HouseSpriteLevel0: {fileID: 1543543495117517831, guid: d9863ccf82c70699294e243eb70e4b7d, type: 3}
-  HouseSpriteLevel1: {fileID: -4979219026945489985, guid: 09df4d03e964fcaa1a74b5e5963cc9e2, type: 3}
-  HouseSpriteLevel2: {fileID: -4443204530625228452, guid: 7538339b959d819649ff8fde98ee7b52, type: 3}
+  humanPrefab: {fileID: 3871131128190142351, guid: add30541dae074e97a26b0f643cbdd14, type: 3}
+  HouseSpriteLevel0: {fileID: 21300000, guid: d9863ccf82c70699294e243eb70e4b7d, type: 3}
+  HouseSpriteLevel1: {fileID: 21300000, guid: 09df4d03e964fcaa1a74b5e5963cc9e2, type: 3}
+  HouseSpriteLevel2: {fileID: 21300000, guid: 7538339b959d819649ff8fde98ee7b52, type: 3}
   occupants: []
   homeCapacityForLevel: 
