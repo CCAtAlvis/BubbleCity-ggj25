@@ -515,6 +515,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameObject: {fileID: 8458971787802826341, guid: f1bbd9971aeb74b80b68907591e3833b, type: 3}
+  oxygenCost: 100
 --- !u!1 &4636239119576284447
 GameObject:
   m_ObjectHideFlags: 0
@@ -977,3 +978,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameObject: {fileID: 4171026242833085949, guid: 519a75b3e1675404aaaec93c3d5bb9d0, type: 3}
+  oxygenCost: 100
