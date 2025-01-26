@@ -47,7 +47,7 @@ public class TileController : MonoBehaviour
             highlighter.SetActive(true);
             highlighter.GetComponent<SpriteRenderer>().color = HighlightColor[0];
             if(!structureType.GetComponent<TreeController>().IsUnityNull() && Input.GetMouseButtonDown(0)){
-                structureType.GetComponent<TreeController>().Pop();
+                 StartCoroutine(structureType.GetComponent<TreeController>().Pop());
             }
             if(!structureType.GetComponent<HomeController>().IsUnityNull() && Input.GetMouseButtonDown(0)){
                 //Do Nothing for now

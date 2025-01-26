@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using Unity.VisualScripting;
+using System.Collections;
 
 public enum TreeLevel
 {
@@ -28,17 +30,15 @@ public class TreeController : MonoBehaviour
     private bool isPlaced = false;
     private bool isPopped = false;
 
+    private Animator animator;
     private void UpdateSprite()
     {
-        if (!isPopped) {
-            spriteRenderer.sprite = TreeSprites[(int)level];
-        } else {
-            if (level == TreeLevel.TEEN)
-                spriteRenderer.sprite = TreeSpriteLevel1Popped;
-            else if (level == TreeLevel.ADULT)
-                spriteRenderer.sprite = TreeSpriteLevel2Popped;
+        if(!isPopped){
+            animator.SetInteger("State",1);
+        }else{
+            animator.SetInteger("State",0);
         }
-
+        
         if (level == TreeLevel.AWAITING_PLANTATION || level == TreeLevel.HUMAN_ALLOCATED_FOR_PLANTATION || level == TreeLevel.PLANTATION_IN_PROGRESS) {
             spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
         } else {
@@ -48,6 +48,14 @@ public class TreeController : MonoBehaviour
 
     public void SetLevel(TreeLevel level)
     {
+        if(!animator.IsUnityNull()){
+            if (level == TreeLevel.ADULT){  
+                animator.SetInteger("Age", 2);
+            }
+            if (level == TreeLevel.TEEN){
+                animator.SetInteger("Age", 1);
+            }
+        }
         this.level = level;
         startTime = Time.time;
         UpdateSprite();
@@ -56,6 +64,7 @@ public class TreeController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        animator = this.GetComponent<Animator>();
         startTime = Time.time;
         TreeSprites = new() { TreeSpriteLevel0, TreeSpriteLevel0, TreeSpriteLevel0, TreeSpriteLevel0, TreeSpriteLevel1, TreeSpriteLevel2 };
         spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
@@ -89,19 +98,24 @@ public class TreeController : MonoBehaviour
         isPlaced = true;
     }
 
-    public void Pop(){
+    public IEnumerator Pop(){
         if (!isPopped) {
+            animator.SetInteger("State",2);
+            Debug.LogError("here");
             if (level == TreeLevel.ADULT) {
                 Debug.Log("Adult Popped");
                 isPopped = true;
                 startTime = Time.time;
+                yield return new WaitForSeconds(1);
                 GameManager.GetInstance().UpdateOxygen(GameManager.GetInstance().oxygenFromTreeLevel3);
                 UpdateSprite();
             } else if (level == TreeLevel.TEEN) {
                 Debug.Log("Teen Popped");
+                
                 isPopped = true;
                 startTime = Time.time;
                 GameManager.GetInstance().UpdateOxygen(GameManager.GetInstance().oxygenFromTreeLevel2);
+                yield return new WaitForSeconds(1);
                 UpdateSprite();
             } else if (level == TreeLevel.SAPLING) {
                 // Nope, nothing here!
@@ -110,6 +124,6 @@ public class TreeController : MonoBehaviour
     }
     void OnMouseDown()
     {
-        Pop();
+         StartCoroutine(Pop());
     }
 }

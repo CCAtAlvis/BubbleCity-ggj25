@@ -1,4 +1,5 @@
 using System.IO.Compression;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,6 +24,8 @@ public class HumanController : MonoBehaviour
     private HomeController assignedHouseForUpgrade;
     public TreeController assignedTree;
     public HumanState state { get; private set; }
+
+    private Animator animator;
 
     public void KickMe() {
         assignedHouse = null;
@@ -66,6 +69,7 @@ public class HumanController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     { 
+        animator = this.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -84,13 +88,18 @@ public class HumanController : MonoBehaviour
         if (state == HumanState.MOVING_FOR_HOMEUPGRADE)
         {
             Debug.Log($"Moving for Upgrade");
+            if(!animator.IsUnityNull()){
+                animator.SetInteger("Status", 1);
+            }
             float elapsedTime = Time.time - startTime;
             float t = Mathf.Clamp01(elapsedTime / duration);
             transform.position = Vector3.Lerp(startPosition, endPosition, Mathf.SmoothStep(0f, 1f, t));
-
             if (elapsedTime >= duration)
             {
                             Debug.Log($"Reached Home for Upgrade");
+           if(!animator.IsUnityNull()){
+                animator.SetInteger("Status", 2);
+            }
                 isMoving = false;
                 transform.position = endPosition;
                 state = HumanState.BUILDING_HOUSE;
@@ -103,12 +112,18 @@ public class HumanController : MonoBehaviour
         //#region Human Movement from own position to another (Started Moving, and Stoppage)
         if (state == HumanState.MOVING_FOR_PLANTING)
         {
+            if(!animator.IsUnityNull()){
+                animator.SetInteger("Status", 1);
+            }
             float elapsedTime = Time.time - startTime;
             float t = Mathf.Clamp01(elapsedTime / duration);
             transform.position = Vector3.Lerp(startPosition, endPosition, Mathf.SmoothStep(0f, 1f, t));
-
+           
             if (elapsedTime >= duration)
             {
+            if(!animator.IsUnityNull()){
+                animator.SetInteger("Status", 0 );
+            }
                 isMoving = false;
                 transform.position = endPosition;
                 state = HumanState.PLANTING_TREE;
@@ -132,7 +147,9 @@ public class HumanController : MonoBehaviour
             float elapsedTime = Time.time - startTime;
             float t = Mathf.Clamp01(elapsedTime / duration);
             transform.position = Vector3.Lerp(startPosition, endPosition, Mathf.SmoothStep(0f, 1f, t));
-
+            if(!animator.IsUnityNull()){
+                animator.SetInteger("Status", 1);
+            }
             if (elapsedTime >= duration)
             {
                 isMoving = false;

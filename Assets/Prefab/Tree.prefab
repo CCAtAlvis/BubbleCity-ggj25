@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 944575765581713975}
   - component: {fileID: 6345969915253522873}
   - component: {fileID: 3284476278451540090}
-  - component: {fileID: 9178189058387906832}
   m_Layer: 0
   m_Name: Tree
   m_TagString: Untagged
@@ -166,7 +165,7 @@ Animator:
   m_GameObject: {fileID: 4171026242833085949}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b84b1f8d1de5948eb9468f4206d51feb, type: 2}
+  m_Controller: {fileID: 9100000, guid: e05854ff03bd69cd8b2022f07cf70649, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
