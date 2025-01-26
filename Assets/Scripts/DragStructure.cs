@@ -8,16 +8,28 @@ public class DragStructure : MonoBehaviour  , IBeginDragHandler, IDragHandler, I
     public GameObject gameObject;
     private GameObject newInstance;
     private Camera cam;
+    public float oxygenCost = 100f;
+    private bool isDragging = false;
+
     public void OnBeginDrag(PointerEventData eventData)
     {
+        var currentOxygen = GameManager.GetInstance().GetCurrentOxygen();
+        if (currentOxygen <= oxygenCost) {
+            return;
+        }
+
         GameManager.GetInstance().isHoverActive = true;
         newInstance = Instantiate(gameObject,Input.mousePosition,Quaternion.identity);
         print(newInstance);
         cam = Camera.main;
+        isDragging = true;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (!isDragging) {
+            return;
+        }
         var pos = cam.ScreenToWorldPoint((Input.mousePosition));
         pos.z = 0;
         newInstance.transform.position = pos;

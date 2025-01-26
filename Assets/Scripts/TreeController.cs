@@ -75,4 +75,14 @@ public class TreeController : MonoBehaviour
         GameManager.GetInstance().RegisterTreePlaced(this);
         isPlaced = true;
     }
+
+    void OnMouseDown()
+    {
+        if (level == TreeLevel.ADULT) {
+            GameManager.GetInstance().UpdateOxygen(GameManager.GetInstance().oxygenFromTreeLevel3);
+        } else if (level == TreeLevel.TEEN) {
+            GameManager.GetInstance().UpdateOxygen(GameManager.GetInstance().oxygenFromTreeLevel2);
+        } else if (level == TreeLevel.SAPLING) {
+        }
+    }
 }

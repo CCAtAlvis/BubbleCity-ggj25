@@ -13,8 +13,8 @@ public class GameManager : MonoBehaviour
 
     [Header("Human Controls")]
     public GameObject humanPrefab;
-    public float homedOxygenConsumptionRate = 100;
-    public float homelessOxygenConsumptionRate = 100;
+    public float homedOxygenConsumptionRate = 5;
+    public float homelessOxygenConsumptionRate = 7;
 
     [Header("Home Controls")]
     public GameObject homeFab;
@@ -41,22 +41,26 @@ public class GameManager : MonoBehaviour
     public TileController hoveredGrid;
 
     // [Header("UI")]
-    // public TextMeshProUGUI oxygenText;
-    // public TextMeshProUGUI homedHumansText;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI bubblesText;
     // public TextMeshProUGUI homelessHumansText;
 
     private float totalOxygen;
     public float GetCurrentOxygen() => totalOxygen;
+    public float UpdateOxygen(float delta) => totalOxygen += delta;
     private List<TreeController> trees = new();
     private List<HomeController> homes = new();
     private List<HumanController> people = new();
 
     private int totalHumans;
-    private int homedHumans;
+    private int homedHumans = 0;
     private int homelessHumans;
 
     private float timeSinceLastUpdate;
     private float levelTime;
+
+    // Score is the number of humans that have been homed
+    private int score = 0;
 
     void Awake()
     {
@@ -91,35 +95,42 @@ public class GameManager : MonoBehaviour
 
         var deltaTime = Time.deltaTime;
 
-        var totalOxygenProduced = 0f;
-        foreach (TreeController tree in trees)
-        {
-            switch (tree.level)
-            {
-                case TreeLevel.SAPLING:
-                    totalOxygenProduced += oxygenFromTreeLevel1;
-                    break;
-                case TreeLevel.TEEN:
-                    totalOxygenProduced += oxygenFromTreeLevel2;
-                    break;
-                case TreeLevel.ADULT:
-                    totalOxygenProduced += oxygenFromTreeLevel3;
-                    break;
-            }
-        }
-        totalOxygenProduced = totalOxygenProduced * deltaTime;
+        // var totalOxygenProduced = 0f;
+        // foreach (TreeController tree in trees)
+        // {
+        //     switch (tree.level)
+        //     {
+        //         case TreeLevel.SAPLING:
+        //             totalOxygenProduced += oxygenFromTreeLevel1;
+        //             break;
+        //         case TreeLevel.TEEN:
+        //             totalOxygenProduced += oxygenFromTreeLevel2;
+        //             break;
+        //         case TreeLevel.ADULT:
+        //             totalOxygenProduced += oxygenFromTreeLevel3;
+        //             break;
+        //     }
+        // }
+        // totalOxygenProduced = totalOxygenProduced * deltaTime;
 
         var totalOxygenConsumed = 0f;
         totalOxygenConsumed += homedHumans * homedOxygenConsumptionRate;
         totalOxygenConsumed += homelessHumans * homelessOxygenConsumptionRate;
         totalOxygenConsumed = totalOxygenConsumed * deltaTime;
 
-        totalOxygen += totalOxygenProduced - totalOxygenConsumed;
+
+        if (homedHumans > score) {
+            score = homedHumans;
+        }
+
+        scoreText.text = "Score: " + score.ToString();
+        bubblesText.text = ((int)totalOxygen).ToString();
+
+        totalOxygen = totalOxygen - totalOxygenConsumed;
 
         var totalPlace = 0;
         foreach (HomeController home in homes)
         {
-            if (!home.isActive) continue;
             switch (home.level)
             {
                 case HomeLevel.SMALL:
@@ -134,26 +145,25 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        var remainingPlace = totalPlace - homedHumans;
-        if (remainingPlace > 0)
-        {
-            homedHumans += remainingPlace;
-            homelessHumans -= remainingPlace;
-        }
-        else
-        {
-            homedHumans -= totalPlace;
-            homelessHumans += totalPlace;
-        }
+
+        homedHumans = people.Where(p => p.state != HumanState.HOMELESS).Count();
+        // var remainingPlace = totalPlace - homedHumans;
+        // if (remainingPlace > 0)
+        // {
+        //     homedHumans += remainingPlace;
+        //     homelessHumans -= remainingPlace;
+        // }
+        // else
+        // {
+        //     homedHumans -= totalPlace;
+        //     homelessHumans += totalPlace;
+        // }
 
         timeSinceLastUpdate += Time.deltaTime;
         levelTime += Time.deltaTime;
 
         CheckTrees();
         CheckHumans();
-        // oxygenText.text = "Oxygen: " + totalOxygen.ToString();
-        // homedHumansText.text = "Homed Humans: " + homedHumans.ToString();
-        // homelessHumansText.text = "Homeless Humans: " + homelessHumans.ToString();
     }
 
     public void RegisterBirthForHuman(HumanController newHuman)
@@ -164,10 +174,12 @@ public class GameManager : MonoBehaviour
 
     public void RegisterTreePlaced(TreeController tree) {
         trees.Add(tree);
+        UpdateOxygen(-2);
     }
 
     public void RegisterHome(HomeController home) {
         homes.Add(home);
+        UpdateOxygen(-10);
     }
 
     // #region Tree Queue Mechanism

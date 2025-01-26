@@ -110,7 +110,7 @@ MonoBehaviour:
   serialNumber: 0
   assignedHouse: {fileID: 0}
   assignedTree: {fileID: 0}
-  duration: 2
+  duration: 3
   startPosition: {x: 0, y: 0, z: 0}
   endPosition: {x: 0, y: 0, z: 0}
 --- !u!222 &7012197072577653604
