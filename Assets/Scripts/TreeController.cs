@@ -11,6 +11,7 @@ public enum TreeLevel
     TEEN = 4,
     ADULT = 5
 }
+
 public class TreeController : MonoBehaviour
 {
     public int TREE_FIRST_THRESHOLD_DURATION = 5;
@@ -27,6 +28,12 @@ public class TreeController : MonoBehaviour
     private void UpdateSprite()
     {
         spriteRenderer.sprite = TreeSprites[(int)level];
+
+        if (level == TreeLevel.AWAITING_PLANTATION || level == TreeLevel.HUMAN_ALLOCATED_FOR_PLANTATION || level == TreeLevel.PLANTATION_IN_PROGRESS) {
+            spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
+        } else {
+            spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
+        }
     }
 
     public void SetLevel(TreeLevel level)

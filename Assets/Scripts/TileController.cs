@@ -6,7 +6,6 @@ public class TileController : MonoBehaviour
 {
     private bool isWithinDiameter;
     public bool IsWithinDiameter => isWithinDiameter;
-    public void SetWithinDiameter(bool active) => isWithinDiameter = active;
 
     public GameObject structureType;
     public GameObject highlighter;
@@ -21,13 +20,22 @@ public class TileController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    }
+
+    public void SetWithinDiameter(bool isWithinDiameter)
+    {
+        this.isWithinDiameter = isWithinDiameter;
         if (!isWithinDiameter)
         {
             highlighter.SetActive(true);
             highlighter.GetComponent<SpriteRenderer>().color = HighlightColor[2];
         }
-
+        else
+        {
+            highlighter.SetActive(false);
+        }
     }
+
 
     void OnMouseOver()
     {
@@ -49,8 +57,12 @@ public class TileController : MonoBehaviour
 
     void OnMouseExit()
     {
-        highlighter.SetActive(false);
-        GameManager.GetInstance().isHoveredGridEmpty = false;
+        if (GameManager.GetInstance().isHoverActive && isWithinDiameter)
+        {
+
+            highlighter.SetActive(false);
+            GameManager.GetInstance().isHoveredGridEmpty = false;
+        }
     }
 
 }

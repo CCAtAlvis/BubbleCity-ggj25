@@ -5,7 +5,9 @@ using System;
 
 public enum HomeLevel
 {
-    NOT_PLACED,
+    AWAITING_PLACEMENT,
+    HUMAN_ALLOCATED,
+    BUILDING_WIP,
     SMALL,
     MEDIUM,
     LARGE
@@ -26,7 +28,7 @@ public class HomeController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     public List<HumanController> occupants = new();
     private float lastPolledTime;
-    private List<int> homeCapacityForLevel;
+    public List<int> homeCapacityForLevel;
     private float timeSinceLastUpdate;
     private float levelTime;
     private int pairs = 0;
@@ -36,8 +38,15 @@ public class HomeController : MonoBehaviour
 
     private void UpdateSprite()
     {
-        
-        spriteRenderer.sprite = HouseSprites[(int) level];
+        spriteRenderer.sprite = HouseSprites[(int)level];
+        if (level == HomeLevel.AWAITING_PLACEMENT || level == HomeLevel.HUMAN_ALLOCATED || level == HomeLevel.BUILDING_WIP)
+        {
+            spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
+        }
+        else
+        {
+            spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
+        }
     }
 
     public void AddHuman(HumanController human)
@@ -69,15 +78,18 @@ public class HomeController : MonoBehaviour
         UpdateSprite();
     }
 
+    void Awake() {
+        gameManager = GameManager.GetInstance();
+        homeCapacityForLevel = new() { 0, 0, 0, gameManager.homeCapacityLevel1, gameManager.homeCapacityLevel2, gameManager.homeCapacityLevel3 };
+        HouseSprites = new() { HouseSpriteLevel0, HouseSpriteLevel0, HouseSpriteLevel0, HouseSpriteLevel0, HouseSpriteLevel1, HouseSpriteLevel2 };
+        spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
+        SetLevel(HomeLevel.SMALL);
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        gameManager = GameManager.GetInstance();
         lastPolledTime = Time.time;
-        homeCapacityForLevel = new() { 0, gameManager.homeCapacityLevel1, gameManager.homeCapacityLevel2, gameManager.homeCapacityLevel3 };
-        HouseSprites = new() { HouseSpriteLevel0 /*TODO with reduced opacity*/, HouseSpriteLevel0, HouseSpriteLevel1, HouseSpriteLevel2 };
-        spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
-        SetLevel(HomeLevel.NOT_PLACED);
     }
 
     // Update is called once per frame
@@ -90,8 +102,9 @@ public class HomeController : MonoBehaviour
         //OnePairEachStrategy();
     }
 
-    public void OnPlaced() {
-        SetLevel(HomeLevel.SMALL);
+    public void OnPlaced()
+    {
+        SetLevel(HomeLevel.AWAITING_PLACEMENT);
         GameManager.GetInstance().RegisterHome(this);
     }
 
@@ -115,7 +128,7 @@ public class HomeController : MonoBehaviour
                     var human = Instantiate(humanPrefab);
                     var humanController = human.GetComponent<HumanController>();
 
-                    if (occupants.Count > homeCapacityForLevel[(int) level])
+                    if (occupants.Count > homeCapacityForLevel[(int)level])
                     {
                         humanController.KickMe();
                     }
@@ -161,7 +174,7 @@ public class HomeController : MonoBehaviour
                 var human = Instantiate(humanPrefab);
                 var humanController = human.GetComponent<HumanController>();
                 // Home decides if this new human can belong here
-                if (occupants.Count > homeCapacityForLevel[(int) level])
+                if (occupants.Count > homeCapacityForLevel[(int)level])
                 {
                     humanController.KickMe();
                 }

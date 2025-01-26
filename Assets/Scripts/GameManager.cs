@@ -73,9 +73,10 @@ public class GameManager : MonoBehaviour
     {
         var home = Instantiate(homeFab, new Vector2(0, 0), Quaternion.identity);
         var homeController = home.GetComponent<HomeController>();
-        homeController.OnPlaced();
+        // homeController.OnPlaced();
         homeController.AddNewHuman();
         homeController.AddNewHuman();
+        RegisterHome(homeController);
     }
 
     // Update is called once per frame
@@ -166,7 +167,6 @@ public class GameManager : MonoBehaviour
     }
 
     public void RegisterHome(HomeController home) {
-        Debug.Log("Home Added");
         homes.Add(home);
     }
 
@@ -175,15 +175,16 @@ public class GameManager : MonoBehaviour
     {
         foreach (var tree in trees.Where(t => t.level == TreeLevel.AWAITING_PLANTATION))
         {
+            Debug.Log("Tree Found: " + tree.level.ToString());
             FindHumanNearestToTree(tree);
         }
     }
 
     public bool FindHumanNearestToTree(TreeController tree)
     {
-                        Debug.Log("Houses now: " + homes.Count());
+        Debug.Log("Houses now: " + homes.Count());
 
-        var availableHouses = homes.Where(h => h.occupants.Count > 0 && h.level != HomeLevel.NOT_PLACED);
+        var availableHouses = homes.Where(h => h.occupants.Count > 0 && h.level != HomeLevel.AWAITING_PLACEMENT);
                 Debug.Log("Available Houses now: " + availableHouses.Count());
         if (availableHouses.Count() == 0) return false;
         var treeVector = new Vector2(tree.transform.position.x, tree.transform.position.y);
@@ -209,7 +210,7 @@ public class GameManager : MonoBehaviour
     }
 
     public bool FindHouseNearestToHuman(HumanController human) {
-        var availableHouses = homes.Where(h => h.occupants.Count > 0);
+        var availableHouses = homes.Where(h => h.occupants.Count < h.homeCapacityForLevel[(int)h.level]);
         if (availableHouses.Count() == 0) return false;
         var treeVector = new Vector2(human.transform.position.x, human.transform.position.y);
 

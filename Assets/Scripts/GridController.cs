@@ -77,22 +77,23 @@ public class GridController : MonoBehaviour
                 if (coordinateToTile.ContainsKey(coord))
                 {
                     // Update tile active state based on whether it's within bounds
-                    bool isWithinBounds = IsWithinGridBounds(iFloat, jFloat, (diameter - 1) / 2);
+                    var isWithinBounds = IsWithinGridBounds(iFloat, jFloat, (diameter - 1) / 2);
                     coordinateToTile[coord].SetWithinDiameter(isWithinBounds);
-                    continue;
                 }
+                else
+                {
+                    var tile = Instantiate(tilePrefab);
+                    tile.transform.position = new Vector3(xOffset + i * 1.8f, j * 0.45f, j * -1);
+                    // tile.sortingOrder = j * -1;
 
-                var tile = Instantiate(tilePrefab);
-                tile.transform.position = new Vector3(xOffset + i * 1.8f, j * 0.45f, j * -1);
-                // tile.sortingOrder = j * -1;
+                    // Add TileController component and configure it
+                    var tileController = tile.gameObject.GetComponentInChildren<TileController>();
+                    bool isWithinMainGrid = IsWithinGridBounds(iFloat, jFloat, (diameter - 1) / 2);
+                    tileController.SetWithinDiameter(isWithinMainGrid);
 
-                // Add TileController component and configure it
-                var tileController = tile.gameObject.GetComponentInChildren<TileController>();
-                bool isWithinMainGrid = IsWithinGridBounds(iFloat, jFloat, (diameter - 1) / 2);
-                tileController.SetWithinDiameter(isWithinMainGrid);
-
-                // Store in our coordinate mapping
-                coordinateToTile[coord] = tileController;
+                    // Store in our coordinate mapping
+                    coordinateToTile[coord] = tileController;
+                }
             }
         }
     }

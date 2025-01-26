@@ -13,6 +13,7 @@ public enum HumanState
     BUILDING_HOUSE = 5,
     HOUSE_DONE = 6
 }
+
 public class HumanController : MonoBehaviour
 {
     public float birthTime;
