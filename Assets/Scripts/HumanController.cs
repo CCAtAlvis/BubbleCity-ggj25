@@ -39,7 +39,7 @@ public class HumanController : MonoBehaviour
         assignedHouseForUpgrade = newTree;
         assignedHouseForUpgrade.SetLevel(HomeLevel.UPGRADING_WIP);
         KickMe();
-        MoveMe(assignedHouse.transform.position, newTree.transform.position, state);
+        MoveMe(this.transform.position, newTree.transform.position, state);
     }
 
     public void CreateWorkForMe(TreeController newTree, HumanState state) {
@@ -149,7 +149,7 @@ public class HumanController : MonoBehaviour
     private bool isMoving = false;
     public void MoveMe(Vector3 aa, Vector3 zz, HumanState movingState)
     {
-        if (movingState != HumanState.MOVING_FOR_PLANTING && movingState != HumanState.MOVING_BACK_TO_HOUSE && movingState != HumanState.MOVING_FOR_PLANTING)
+        if (movingState != HumanState.MOVING_FOR_PLANTING && movingState != HumanState.MOVING_BACK_TO_HOUSE && movingState != HumanState.MOVING_FOR_HOMEUPGRADE)
             throw new System.Exception("Wat");
         startPosition = aa;
         endPosition = zz;

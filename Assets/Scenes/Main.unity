@@ -320,6 +320,10 @@ PrefabInstance:
       propertyPath: isActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2260656303037128785, guid: f1bbd9971aeb74b80b68907591e3833b, type: 3}
+      propertyPath: UpgradeRateForOneHuman
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7116645687142354570, guid: f1bbd9971aeb74b80b68907591e3833b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

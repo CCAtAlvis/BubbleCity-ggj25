@@ -165,6 +165,7 @@ public class GameManager : MonoBehaviour
 
         CheckTrees();
         CheckHumans();
+        CheckHomes();
     }
 
     public void RegisterBirthForHuman(HumanController newHuman)
@@ -235,19 +236,18 @@ public class GameManager : MonoBehaviour
     }
 
     public void CheckHomes() {
-        Debug.Log("Humans now: " + people.Count());
         foreach (var home in homes.Where(p => p.level == HomeLevel.AWAITING_BUILD || p.level == HomeLevel.AWAITING_UPGRADE || p.level == HomeLevel.BUILDING_WIP || p.level == HomeLevel.UPGRADING_WIP)) {
-            Debug.Log("Find Human Near to Human: " + home.level.ToString());
             SendNearestHumanToHome(home);
         }
     }
 
-    public bool SendNearestHumanToHome(HomeController home) {        
+    public bool SendNearestHumanToHome(HomeController home) {
         if (home.occupants.Count > 0) {
             home.SendHumanToWork(home, HumanState.MOVING_FOR_HOMEUPGRADE);
+            return true;
         }
 
-        var availableHouses = homes.Where(h => h.occupants.Count < h.homeCapacityForLevel[(int)h.level]);
+        var availableHouses = homes.Where(h => h.occupants.Count > 0);
             
         if (availableHouses.Count() == 0) return false;
         var treeVector = new Vector2(home.transform.position.x, home.transform.position.y);
