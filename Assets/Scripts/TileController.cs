@@ -50,6 +50,7 @@ public class TileController : MonoBehaviour
     void OnMouseExit()
     {
         highlighter.SetActive(false);
+        GameManager.GetInstance().isHoveredGridEmpty = false;
     }
 
 }
