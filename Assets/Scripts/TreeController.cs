@@ -22,11 +22,13 @@ public class TreeController : MonoBehaviour
     public Sprite TreeSpriteLevel2;
     private List<Sprite> TreeSprites;
     private SpriteRenderer spriteRenderer;
-    public Boolean isPlaced = false;
+    private bool isPlaced = false;
+
     private void UpdateSprite()
     {
         spriteRenderer.sprite = TreeSprites[(int)level];
     }
+
     public void SetLevel(TreeLevel level)
     {
         this.level = level;
@@ -39,13 +41,11 @@ public class TreeController : MonoBehaviour
         startTime = Time.time;
         TreeSprites = new() { TreeSpriteLevel0, TreeSpriteLevel0, TreeSpriteLevel0, TreeSpriteLevel0, TreeSpriteLevel1, TreeSpriteLevel2 };
         spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
-        this.SetLevel(TreeLevel.AWAITING_PLANTATION);
     }
 
     // Update is called once per frame
     void Update()
     {
-        print(level);
         if (isPlaced && (level == TreeLevel.SAPLING || level == TreeLevel.TEEN || level == TreeLevel.ADULT))
         {
             var currentTime = Time.time;
@@ -60,5 +60,12 @@ public class TreeController : MonoBehaviour
                 SetLevel(TreeLevel.ADULT);
             }
         }
+    }
+
+    public void OnPlaced()
+    {
+        this.SetLevel(TreeLevel.AWAITING_PLANTATION);
+        GameManager.GetInstance().RegisterTreePlaced(this);
+        isPlaced = true;
     }
 }

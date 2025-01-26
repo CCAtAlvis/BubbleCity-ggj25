@@ -71,7 +71,11 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // totalOxygen = initialOxygen;
+        var home = Instantiate(homeFab, new Vector2(0, 0), Quaternion.identity);
+        var homeController = home.GetComponent<HomeController>();
+        homes.Add(homeController);
+        homeController.AddNewHuman();
+        homeController.AddNewHuman();
     }
 
     // Update is called once per frame
@@ -155,6 +159,14 @@ public class GameManager : MonoBehaviour
     {
         newHuman.birthTime = Time.time;
         people.Add(newHuman);
+    }
+
+    public void RegisterTreePlaced(TreeController tree) {
+        trees.Add(tree);
+    }
+
+    public void RegisteredHomePlaced(HomeController home) {
+        homes.Add(home);
     }
 
     // #region Tree Queue Mechanism

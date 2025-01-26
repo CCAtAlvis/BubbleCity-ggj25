@@ -28,10 +28,10 @@ public class DragStructure : MonoBehaviour  , IBeginDragHandler, IDragHandler, I
         GameManager.GetInstance().isHoverActive = false;
         if(GameManager.GetInstance().isHoveredGridEmpty){
             if(!newInstance.GetComponent<TreeController>().IsUnityNull()){
-                newInstance.GetComponent<TreeController>().isPlaced = true;
+                newInstance.GetComponent<TreeController>().OnPlaced();
             }
             if(!newInstance.GetComponent<HomeController>().IsUnityNull()){
-                newInstance.GetComponent<HomeController>().isPlaced = true;
+                newInstance.GetComponent<HomeController>().OnPlaced();
             }
             GameManager.GetInstance().hoveredGrid.structureType = newInstance;
         }else{

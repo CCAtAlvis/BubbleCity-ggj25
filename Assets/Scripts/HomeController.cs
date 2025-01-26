@@ -5,6 +5,8 @@ using System;
 
 public class HomeController : MonoBehaviour
 {
+
+    public float thresholdForHumanCreation = 15f;
     public int level { get; private set; }
     public bool isActive;
     public GameObject humanPrefab;
@@ -23,7 +25,7 @@ public class HomeController : MonoBehaviour
     private bool isSingleHumanLeftOutInPairing = false;
     private float humanCreationProbabilityThreshold = 0.9f;
 
-    public bool isPlaced = false;
+    private bool isPlaced = false;
     private GameManager gameManager;
 
     private void UpdateSprite()
@@ -35,6 +37,14 @@ public class HomeController : MonoBehaviour
     {
         occupants.Add(human);
         human.MoveMe(human.transform.position, this.transform.position, HumanState.MOVING_BACK_TO_HOUSE);
+    }
+
+    public void AddNewHuman()
+    {
+        var human = Instantiate(humanPrefab);
+        var component = human.GetComponent<HumanController>();
+        occupants.Add(component);
+        GameManager.GetInstance().RegisterBirthForHuman(component);
     }
 
     public void SendHumanToWork(TreeController tree, HumanState state)
@@ -73,11 +83,16 @@ public class HomeController : MonoBehaviour
         //OnePairEachStrategy();
     }
 
+    public void OnPlaced() {
+        isPlaced = true;
+        GameManager.GetInstance().RegisteredHomePlaced(this);
+    }
+
     void RandomProbabilisticStrategy(int populationCount)
     {
         float currentTime = Time.time;
         timeSinceLastUpdate = currentTime - lastPolledTime;
-        if (timeSinceLastUpdate >= 100)
+        if (timeSinceLastUpdate >= thresholdForHumanCreation)
         {
             float elapsedTime = currentTime - levelTime;
             humanCreationProbabilityThreshold = (float)Math.Max(0.3, 0.8 - (0.01 * elapsedTime));

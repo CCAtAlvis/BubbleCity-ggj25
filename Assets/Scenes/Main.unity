@@ -551,6 +551,7 @@ GameObject:
   - component: {fileID: 792653528}
   - component: {fileID: 792653532}
   - component: {fileID: 792653533}
+  - component: {fileID: 792653534}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -692,7 +693,7 @@ MonoBehaviour:
   humanPrefab: {fileID: 0}
   homedOxygenConsumptionRate: 100
   homelessOxygenConsumptionRate: 100
-  homeFab: {fileID: 0}
+  homeFab: {fileID: 8458971787802826341, guid: f1bbd9971aeb74b80b68907591e3833b, type: 3}
   homeCapacityLevel1: 10
   homeCapacityLevel2: 5
   homeCapacityLevel3: 20
@@ -725,6 +726,20 @@ MonoBehaviour:
   bufferGridDiameter: 1
   diameterVolumeMultiplier: 0.65
   tilePrefab: {fileID: 3844876417281722709, guid: 8ea3e7d5257cd43b5a4291bda73f2989, type: 3}
+--- !u!114 &792653534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792653527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1901ba6f4299b4f9f87a4da9fe0bf14d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
+  zoomSpeed: 10
 --- !u!1001 &9097507132711149522
 PrefabInstance:
   m_ObjectHideFlags: 0
