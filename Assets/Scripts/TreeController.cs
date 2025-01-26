@@ -89,9 +89,7 @@ public class TreeController : MonoBehaviour
         isPlaced = true;
     }
 
-    void OnMouseDown()
-    {
-        Debug.Log("Tree tiggered");
+    public void Pop(){
         if (!isPopped) {
             if (level == TreeLevel.ADULT) {
                 Debug.Log("Adult Popped");
@@ -109,5 +107,9 @@ public class TreeController : MonoBehaviour
                 // Nope, nothing here!
             }
         }
+    }
+    void OnMouseDown()
+    {
+        Pop();
     }
 }
