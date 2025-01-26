@@ -22,6 +22,10 @@ public class GridController : MonoBehaviour
     private Vector2 gridXBasis = new Vector2(gridXOffset, -gridYOffset);
     private Vector2 gridYBasis = new Vector2(gridXOffset, gridYOffset);
 
+    private float diameterFloat;
+
+    public float getDiameter() => diameterFloat;
+
     void Awake()
     {
         if (instance == null)
@@ -43,7 +47,8 @@ public class GridController : MonoBehaviour
     void Update()
     {
         float currentOxygen = GameManager.GetInstance().GetCurrentOxygen();
-        int diameter = Mathf.FloorToInt(Mathf.Pow(currentOxygen, 1f / 3) * diameterVolumeMultiplier);
+        diameterFloat = Mathf.Pow(currentOxygen, 1f / 3) * diameterVolumeMultiplier;
+        int diameter = Mathf.FloorToInt(diameterFloat);
         if (diameter % 2 == 0)
         {
             return;
