@@ -120,8 +120,8 @@ TextureImporter:
         y: 35
         width: 1284
         height: 2278
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: fcf63ccab1c5e449fb4e0fc8e60dc0f5
     internalID: 0
     vertices: []
     indices: 
@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      sci-fi houses_0002_0: -4443204530625228452
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

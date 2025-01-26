@@ -3,9 +3,21 @@ using System.Linq;
 using System.Collections.Generic;
 using System;
 
+public enum HomeLevel
+{
+    AWAITING_PLACEMENT,
+    HUMAN_ALLOCATED,
+    BUILDING_WIP,
+    SMALL,
+    MEDIUM,
+    LARGE
+}
+
 public class HomeController : MonoBehaviour
 {
-    public int level { get; private set; }
+
+    public float thresholdForHumanCreation = 15f;
+    public HomeLevel level { get; private set; }
     public bool isActive;
     public GameObject humanPrefab;
     public Sprite HouseSpriteLevel0;
@@ -14,65 +26,96 @@ public class HomeController : MonoBehaviour
 
     private List<Sprite> HouseSprites;
     private SpriteRenderer spriteRenderer;
-    private List<HumanController> occupants = new();
+    public List<HumanController> occupants = new();
     private float lastPolledTime;
-    private List<int> homeCapacityForLevel;
+    public List<int> homeCapacityForLevel;
     private float timeSinceLastUpdate;
     private float levelTime;
     private int pairs = 0;
     private bool isSingleHumanLeftOutInPairing = false;
     private float humanCreationProbabilityThreshold = 0.9f;
+    private GameManager gameManager;
 
     private void UpdateSprite()
     {
-        spriteRenderer.sprite = HouseSprites[level];
+        spriteRenderer.sprite = HouseSprites[(int)level];
+        if (level == HomeLevel.AWAITING_PLACEMENT || level == HomeLevel.HUMAN_ALLOCATED || level == HomeLevel.BUILDING_WIP)
+        {
+            spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
+        }
+        else
+        {
+            spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
+        }
     }
 
-    void AddHuman()
+    public void AddHuman(HumanController human)
     {
-        var human1 = Instantiate(humanPrefab);
-        var component = human1.GetComponent<HumanController>();
+        occupants.Add(human);
+        human.MoveMe(human.transform.position, this.transform.position, HumanState.MOVING_BACK_TO_HOUSE);
+    }
+
+    public void AddNewHuman()
+    {
+        var human = Instantiate(humanPrefab);
+        var component = human.GetComponent<HumanController>();
         occupants.Add(component);
-        Debug.Log("Occupant Count > " + occupants.Count());
+        component.AssignMe(this);
+        GameManager.GetInstance().RegisterBirthForHuman(component);
     }
 
-    void IncreaseLevel()
+    public void SendHumanToWork(TreeController tree, HumanState state)
     {
-        level++;
+        var randomHumanIndex = new System.Random().Next(0, occupants.Count() - 1);
+        occupants[randomHumanIndex].CreateWorkForMe(tree, state);
+        occupants.RemoveAt(randomHumanIndex);
+    }
+
+    void SetLevel(HomeLevel level)
+    {
+        this.level = level;
         levelTime = Time.time;
+        UpdateSprite();
+    }
+
+    void Awake() {
+        gameManager = GameManager.GetInstance();
+        homeCapacityForLevel = new() { 0, 0, 0, gameManager.homeCapacityLevel1, gameManager.homeCapacityLevel2, gameManager.homeCapacityLevel3 };
+        HouseSprites = new() { HouseSpriteLevel0, HouseSpriteLevel0, HouseSpriteLevel0, HouseSpriteLevel0, HouseSpriteLevel1, HouseSpriteLevel2 };
+        spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
+        SetLevel(HomeLevel.SMALL);
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Debug.Log("Start");
-        level = 0;
         lastPolledTime = Time.time;
-        levelTime = Time.time;
-        homeCapacityForLevel = new() { GameManager.GetInstance().homeCapacityLevel1, GameManager.GetInstance().homeCapacityLevel2, GameManager.GetInstance().homeCapacityLevel3 };
-        HouseSprites = new() { HouseSpriteLevel0, HouseSpriteLevel1, HouseSpriteLevel2 };
-        spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
-        UpdateSprite();
-        AddHuman();
-        AddHuman();
     }
 
     // Update is called once per frame
     void Update()
     {
-        RandomProbabilisticStrategy(occupants.Count());
+        if (level >= HomeLevel.SMALL)
+        {
+            RandomProbabilisticStrategy(occupants.Count());
+        }
         //OnePairEachStrategy();
+    }
+
+    public void OnPlaced()
+    {
+        SetLevel(HomeLevel.AWAITING_PLACEMENT);
+        GameManager.GetInstance().RegisterHome(this);
     }
 
     void RandomProbabilisticStrategy(int populationCount)
     {
         float currentTime = Time.time;
         timeSinceLastUpdate = currentTime - lastPolledTime;
-        if (timeSinceLastUpdate >= 3)
+        if (timeSinceLastUpdate >= thresholdForHumanCreation)
         {
             float elapsedTime = currentTime - levelTime;
             humanCreationProbabilityThreshold = (float)Math.Max(0.3, 0.8 - (0.01 * elapsedTime));
-            Debug.Log("Occupant Count > " + occupants.Count());
             timeSinceLastUpdate = 0;
             lastPolledTime = Time.time;
 
@@ -85,10 +128,9 @@ public class HomeController : MonoBehaviour
                     var human = Instantiate(humanPrefab);
                     var humanController = human.GetComponent<HumanController>();
 
-                    if (occupants.Count > homeCapacityForLevel[level])
+                    if (occupants.Count > homeCapacityForLevel[(int)level])
                     {
                         humanController.KickMe();
-                        Debug.Log("Maximum Occupancy, Kicking out 1");
                     }
                     else
                     {
@@ -107,7 +149,7 @@ public class HomeController : MonoBehaviour
                             isSingleHumanLeftOutInPairing = true;
                         }
                     }
-                    GameManager.GetInstance().RegisterBirthForHuman(humanController);
+                    gameManager.RegisterBirthForHuman(humanController);
                 }
             }
         }
@@ -119,7 +161,6 @@ public class HomeController : MonoBehaviour
         timeSinceLastUpdate = currentTime - lastPolledTime;
         if (timeSinceLastUpdate >= 3)
         {
-            Debug.Log("Occupant Count > " + occupants.Count());
             timeSinceLastUpdate = 0;
             lastPolledTime = Time.time;
             //var rateOfRepro = (int)Mathf.Pow(1.1f, levelTime);
@@ -133,11 +174,9 @@ public class HomeController : MonoBehaviour
                 var human = Instantiate(humanPrefab);
                 var humanController = human.GetComponent<HumanController>();
                 // Home decides if this new human can belong here
-                Debug.Log($"Occupants: {occupants.Count()} | Max: {homeCapacityForLevel[level]}");
-                if (occupants.Count > homeCapacityForLevel[level])
+                if (occupants.Count > homeCapacityForLevel[(int)level])
                 {
                     humanController.KickMe();
-                    Debug.Log("Maximum Occupancy, Kicking out 1");
                 }
                 else
                 {
@@ -157,7 +196,7 @@ public class HomeController : MonoBehaviour
                     }
                 }
                 // Sending ahead for birth registration
-                GameManager.GetInstance().RegisterBirthForHuman(humanController);
+                gameManager.RegisterBirthForHuman(humanController);
             }
         }
     }

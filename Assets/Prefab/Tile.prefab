@@ -25,9 +25,9 @@ Transform:
   m_GameObject: {fileID: 3844876417281722709}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.909, y: -0.572, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.22, y: 1.22, z: 1.22}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1041167784304700734}
   - {fileID: 3732845351178269174}
@@ -61,7 +61,7 @@ Transform:
   m_GameObject: {fileID: 5757883412869100796}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.105, y: 0.204, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.125, y: 0.125, z: 0.125}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -168,10 +168,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.02, y: 3.39}
-      - {x: -5.82, y: -0.01}
-      - {x: -0.08, y: -3.41}
-      - {x: 5.85, y: 0.04}
+    - - {x: 0, y: 3}
+      - {x: -5.8, y: 0}
+      - {x: 0, y: -3}
+      - {x: 5.8, y: 0}
   m_UseDelaunayMesh: 1
 --- !u!114 &1212165461596886536
 MonoBehaviour:
@@ -185,6 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47375276ffccc4a1bbe3f3ae9ffec86c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  structureType: {fileID: 0}
   highlighter: {fileID: 8542884722887120354}
 --- !u!1 &8542884722887120354
 GameObject:
@@ -212,9 +213,9 @@ Transform:
   m_GameObject: {fileID: 8542884722887120354}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.1, y: 0.205, z: 0}
-  m_LocalScale: {x: 1.4325947, y: 1.6793106, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.125, y: 0.125, z: 0.125}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7092822689654427741}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -262,7 +263,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 3625043607559282579, guid: 39e6dee07a4814f5f80d4a593b5cc154, type: 3}
+  m_Sprite: {fileID: -4098808270819467109, guid: 98c4f9a41f6ea49e38d9189ad3150d69, type: 3}
   m_Color: {r: 0, g: 1, b: 0, a: 0.3}
   m_FlipX: 0
   m_FlipY: 0
