@@ -153,6 +153,10 @@ public class HomeController : MonoBehaviour
             lastPolledTime = Time.time;
 
             int pairs = populationCount / 2; // Number of possible pairs
+            if (pairs == 0) {
+                AddNewHuman();
+                pairs++;
+            }
 
             for (int i = 0; i < pairs; i++)
             {

@@ -8,6 +8,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
+    public  GameObject endScreen;
+    public  TextMeshProUGUI endScreenText;
+
     private static GameManager instance;
     public static GameManager GetInstance() => instance;
     public float initialOxygen = 100;
@@ -89,8 +92,8 @@ public class GameManager : MonoBehaviour
     {
         if (totalOxygen <= 0)
         {
-            Debug.Log($"Game Over");
-            return;
+            endScreen.SetActive(true);
+            endScreenText.text = "Score: " + score.ToString();
         }
         // totalOxygen += 1000*Time.deltaTime; 
 
