@@ -19,7 +19,7 @@ public class DragStructure : MonoBehaviour  , IBeginDragHandler, IDragHandler, I
         }
 
         GameManager.GetInstance().isHoverActive = true;
-        newInstance = Instantiate(gameObject,Input.mousePosition,Quaternion.identity);
+        newInstance = Instantiate(gameObject,new Vector3(Input.mousePosition.x,Input.mousePosition.y,-9),Quaternion.identity);
         print(newInstance);
         cam = Camera.main;
         isDragging = true;
