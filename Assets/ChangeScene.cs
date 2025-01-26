@@ -13,6 +13,8 @@ public class ChangeScene : MonoBehaviour
     public GameObject slide4;
     public GameObject slide5;
     public GameObject slide6;
+    public GameObject slide7;
+    public GameObject slide8;
 
     GameObject slideToMove = null;
 
@@ -50,6 +52,12 @@ public class ChangeScene : MonoBehaviour
         } else if (state == 5) {
             slideToMove.transform.position = endPos;
             slideToMove = slide6;
+        } else if (state == 6) {
+            slideToMove.transform.position = endPos;
+            slideToMove = slide7;
+        } else if (state == 7) {
+            slideToMove.transform.position = endPos;
+            slideToMove = slide8;
         } else {
             SceneManager.LoadScene("Main");
         }
